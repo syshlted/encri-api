@@ -37,7 +37,9 @@ interface IEncriService {
      * The Activity a client starts for a result to ask the user for access (encri D114). It
      * answers Activity.RESULT_OK with EXTRA_RIGHTS holding what the user allowed, or
      * RESULT_CANCELED. It must be started with startActivityForResult: encri reads who is asking
-     * from the system, and refuses a request it cannot attribute.
+     * from the system, and refuses a request it cannot attribute. What the user allows replaces the
+     * app's grant with exactly the rights asked for and ends its sessions; RESULT_CANCELED changes
+     * nothing.
      */
     const String ACTION_AUTHORIZE = "com.systemhalted.encri.api.action.AUTHORIZE";
 
@@ -82,7 +84,10 @@ interface IEncriService {
 
     const int STATE_LOCKED = 1;
     const int STATE_UNLOCKED = 2;
-    /** The session is over: access was revoked, turned off, or the session was ended. */
+    /**
+     * The session is over: the app's grant was revoked or replaced, the folder it is rooted at was
+     * deleted, access was turned off, or the session was ended.
+     */
     const int STATE_ENDED = 3;
 
     // ---- Statuses every result carries -------------------------------------------------------

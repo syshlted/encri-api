@@ -35,8 +35,9 @@ import java.util.concurrent.atomic.AtomicBoolean
  * thread.
  *
  * **A session outlives a lock.** While the vault is locked every request answers [Failure.LOCKED], and
- * after the next unlock they work again; [events] says which. It ends when the user revokes this app,
- * turns access for other apps off, the app calls [close], or encri's process goes away.
+ * after the next unlock they work again; [events] says which. It ends when the user revokes this app or
+ * allows it again, the folder its grant is rooted at is deleted, the user turns access for other apps off,
+ * the app calls [close], or encri's process goes away (L23).
  */
 @Suppress("TooManyFunctions") // One per request the contract has.
 public class EncriSession private constructor(

@@ -65,6 +65,9 @@ item 3.
   see AGP's compilations yet.
 - ~~**The Kotlin floor for consumers** (L3): `languageVersion`, `apiVersion`, `coreLibrariesVersion`. Since
   L9 the default is an app on Kotlin 2.3 or newer, receiving stdlib 2.4.21.~~ **Kotlin 2.1, stdlib 2.2.10 (L17).**
+- **encri ends a session whose grant's folder is deleted** (L23), which encri 0.1.0 does not: it drops the grant
+  and leaves the session open. encri's to build; then `AgainstEncriTest` checks both of L23's promises, a grant
+  replaced and a grant's folder deleted, which need a second package to delete it.
 - **Publishing** (L1): Maven Central, with `com.systemhalted` verified by a DNS record on
   `systemhalted.com`; the signing of artifacts; and reproducible AARs checked as encri's release is
   (encri D116).

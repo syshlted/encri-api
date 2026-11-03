@@ -57,7 +57,8 @@ normative; where they and this page disagree, the `.aidl` files are right.
    - `STATUS_OK`, with an `IEncriSession` and the `Grant` it carries.
 2. **The session is this app's alone.** encri checks on every call that the caller is the app the
    session was opened for. It ends when the app calls `end()`, the app's process dies, the user turns
-   the app out, or the user turns access for other apps off. **It survives a lock**: while the vault is
+   the app out or allows it again (below), the folder its grant is rooted at is deleted, or the user
+   turns access for other apps off. **It survives a lock**: while the vault is
    locked every call answers `STATUS_LOCKED`, and the listener hears the lock and the unlock.
 
 ### Asking the user
@@ -68,6 +69,11 @@ normative; where they and this page disagree, the `.aidl` files are right.
   the screen, which only `startActivityForResult` sets; started any other way, the screen refuses. The
   user chooses whether to allow the whole vault or one folder. `RESULT_OK` carries the rights allowed in
   the same extra.
+- **What the user allows replaces the app's grant**, with exactly the rights asked for: ask for every
+  right the app means to keep, the ones it holds included, because asking for fewer narrows the grant.
+  Allowing ends every session the app holds, each of which hears `STATE_ENDED`; open a new one. Refused
+  or backed out of, the screen answers `RESULT_CANCELED` and nothing changes: the grant and its
+  sessions go on.
 - **Unlocking:** start action `com.systemhalted.encri.action.UNLOCK` for a result, the package set to
   encri's. It answers `RESULT_OK` once the vault is unlocked, at once if it already is.
 
@@ -98,7 +104,8 @@ them, so resolve the Intent before offering the entry.
 
 A grant is rooted at the whole vault or at one folder. **An id outside it answers `STATUS_NOT_FOUND`**,
 the same as an id that does not exist. The folder a grant is rooted at cannot be renamed, moved or
-deleted through it, and its parent reads as null.
+deleted through it, and its parent reads as null. **If another app deletes that folder, the grant is
+gone**: its sessions end, and the app is let in again only by asking.
 
 ## What a session can do
 

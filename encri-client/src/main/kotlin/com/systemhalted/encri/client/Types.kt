@@ -137,7 +137,10 @@ public sealed interface VaultEvent {
 
     public data object Unlocked : VaultEvent
 
-    /** The session is over: the user revoked this app, turned access off, or the connection went. */
+    /**
+     * The session is over: the user revoked this app, allowed it again or turned access off, the folder its
+     * grant is rooted at was deleted, or the connection went (L23).
+     */
     public data object Ended : VaultEvent
 
     /** The children of a folder changed. Best effort, as SAF's notifications are. */

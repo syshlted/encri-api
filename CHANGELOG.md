@@ -5,6 +5,14 @@ than restating it.
 
 ## Unreleased
 
+### What a consent and a deleted folder do to a session — 2026-11-03
+
+- **What the user allows replaces the app's grant**, with exactly the rights asked for, and ends its sessions; a
+  refusal changes nothing (L23). `PROTOCOL.md`, `authorizationIntent` and the contract's comments say so.
+- **A grant whose folder another app deletes ends its sessions** (L23).
+
+**Known issues.** encri 0.1.0 leaves that session open, telling it nothing; encri owes the change (L23).
+
 ### encri's release key — 2026-10-28
 
 - **Encri Files is in the registry**, under encri's app signing certificate, so encri's consent screen names who wrote

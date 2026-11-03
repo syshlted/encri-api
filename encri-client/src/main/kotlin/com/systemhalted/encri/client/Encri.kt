@@ -69,6 +69,10 @@ public object Encri {
      *
      * The user chooses on encri's own screen whether to allow the whole vault or one folder, and encri
      * names the app from the system, never from this request.
+     *
+     * **What the user allows replaces the app's grant** with exactly [rights], so ask for every right the
+     * app means to keep, not only the one it lacks; and it ends every session the app holds, each of which
+     * hears [VaultEvent.Ended]. A refusal changes nothing (L23).
      */
     public fun authorizationIntent(rights: Set<Right>): Intent =
         Intent(Contract.ACTION_AUTHORIZE)
