@@ -48,6 +48,9 @@ screen left encri for two backup apps of their own (encri D137), and `ACTION_BAC
 **What a consent and a deleted folder do to a session is promised as of 2026-11-03 (L23)**, from what encri was
 seen to do; encri owes ending the session whose grant's folder is deleted.
 
+**A handoff names its document only when the client asks, as of 2026-11-11 (L24, encri D147)**, by a method that
+comes with contract version 2. Nothing is built: the method lands with encri's half.
+
 ## Relationship to encri
 
 - **Decisions here are numbered L1, L2, …, and encri's are cited as *encri D113*.** Two logs both
@@ -1116,6 +1119,44 @@ the contract and would leave a session open with nothing it can reach.
 **Verified** against encri on the phones by encri-images' probes, `GrantChanges` and `GrantGone`; `AgainstEncriTest`
 checks neither yet (`ROADMAP.md`). Here only `PROTOCOL.md` and comments changed: the contract's and the client's
 suites, every lint and the API dump pass as before.
+
+### L24 — A handoff names its document only when the client asks, by a method of its own in version 2
+*2026-11-11 · accepted at the user's direction, with encri D147 ("I like this option": a share may send the
+document's name, which is hidden unless the user asks); **flagged for veto on two points** (below). Nothing is
+built: the method is appended when encri builds D147, so the contract and encri's service change together.*
+
+**What every client gets from encri D147 on.** The app a handoff reaches reads a name made from the handoff's
+token, twelve hex digits and an extension from the document's type, such as `3f9c2a71e0b4.jpg`, and not the
+document's own. The token is drawn per handoff, so two handoffs of one document cannot be linked by name. The
+document's id and name were already kept out of the URI (encri D117); this keeps the name out of the
+`OpenableColumns` row as well. `PROTOCOL.md`'s *"the app it reaches reads the name through `OpenableColumns`"* stays
+true of every encri before D147, and is rewritten when the method lands.
+
+**A handoff that carries the name is a method of its own**: `HandoffResult handOffNamed(in String[] documentIds)`,
+appended after the last (L2) and alike to `handOff` in everything but the name the receiving app reads. In the
+client it is `EncriSession.handOff(documentIds, withNames = false)`. A client asks for it only on the user's word
+for that handoff. encri-files and encri-images are to offer it on a share and not on *open with*, and their logs
+record the screen.
+
+**It comes with `VERSION` 2.** encri 0.1.0 and Encri Files 0.1.0 speak version 1 (encri D136), so the method
+cannot join it. The version also tells a client which names a plain `handOff` gives: an encri that answers 2 or
+more hides them, and one that answers 1 gives the real ones. The client does not call the method above an older
+encri's version (L2), and answers `STATUS_UNSUPPORTED`. The app then says so, rather than sending the document
+under a name the user did not choose.
+
+*Rejected:* a flag added to `handOff` in place. Version 1 is in apps already, and L2 allows only appending.
+*Rejected:* `handOffWith(ids, options)`, an `int` of options appended once, which carries one bit today and needs an
+answer for every bit it does not know. A second option is a second method. *Rejected:* a name the client supplies,
+which encri would serve without ever having stored it, on the word of an app that is not the user.
+
+**Flagged for veto:**
+
+1. **`VERSION` 2 before the contract's first `v*` tag.** No tag exists, but two apps speaking version 1 do.
+2. **An encri older than D147 names every handoff**, and a client can learn that only from the version, not from
+   the URI or the row.
+
+**Verified:** nothing; this records the shape. The method, the version, `WireNamesTest`, `PROTOCOL.md` and
+`AgainstEncriTest` reading a handoff's name both ways come with encri's build (`ROADMAP.md`).
 
 ---
 

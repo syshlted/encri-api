@@ -5,6 +5,13 @@ than restating it.
 
 ## Unreleased
 
+### A handoff names its document only when asked — 2026-11-11
+
+- **Decided, not built** (L24, encri D147): from encri D147 on, the app a handoff reaches reads a name made from the
+  handoff's token. `handOffNamed`, appended in contract version 2, asks for the real one on the user's word.
+
+**Known issues.** Nothing is built; until it is, every handoff gives the document's real name.
+
 ### What a consent and a deleted folder do to a session — 2026-11-03
 
 - **What the user allows replaces the app's grant**, with exactly the rights asked for, and ends its sessions; a
