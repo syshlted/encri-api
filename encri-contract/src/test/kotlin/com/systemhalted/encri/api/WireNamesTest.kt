@@ -54,6 +54,7 @@ class WireNamesTest {
                 "space",
                 "lock",
                 "end",
+                "handOffNamed",
             ),
             positions(IEncriSession.Stub::class.java),
         )
@@ -67,8 +68,8 @@ class WireNamesTest {
     }
 
     @Test
-    fun `this is the first version of the contract`() {
-        assertEquals(1, IEncriService.VERSION)
+    fun `this is the second version of the contract`() {
+        assertEquals(2, IEncriService.VERSION)
     }
 
     @Test

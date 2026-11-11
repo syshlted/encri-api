@@ -145,10 +145,11 @@ class AgainstEncriTest {
         val uri = ok(blocking { session.handOff(listOf(document.id)) }).single()
         assertTrue("the URI names the document: $uri", document.id !in uri.toString() && "handed" !in uri.toString())
         assertArrayEquals(HANDED, read(uri))
-        context.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null).use { names ->
-            assertTrue(requireNotNull(names).moveToFirst())
-            assertEquals("handed.txt", names.getString(0))
-        }
+        // A name made from the URI's token, with the type's extension, and not the document's (L24).
+        assertEquals("${requireNotNull(uri.lastPathSegment).take(MADE_UP_DIGITS)}.txt", nameOf(uri))
+        val named = ok(blocking { session.handOff(listOf(document.id), withNames = true) }).single()
+        assertEquals("handed.txt", nameOf(named))
+        ok(blocking { session.revokeHandoffs(listOf(named)) })
         ok(blocking { session.revokeHandoffs(listOf(uri)) })
         val after = runCatching { read(uri) }.exceptionOrNull()
         assertTrue("a revoked handoff still read: $after", after is FileNotFoundException || after is SecurityException)
@@ -323,6 +324,13 @@ class AgainstEncriTest {
         private fun read(uri: Uri): ByteArray =
             requireNotNull(context.contentResolver.openInputStream(uri)) { "nothing opened" }.use { it.readBytes() }
 
+        /** The name the app a handoff reaches reads, through `OpenableColumns`. */
+        private fun nameOf(uri: Uri): String? =
+            context.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null).use { names ->
+                assertTrue(requireNotNull(names).moveToFirst())
+                names.getString(0)
+            }
+
         private fun png(
             width: Int,
             height: Int,
@@ -362,6 +370,7 @@ class AgainstEncriTest {
         private const val PICTURE_HEIGHT = 200
         private const val PREVIEW = 64
         private const val PNG_QUALITY = 100
+        private const val MADE_UP_DIGITS = 12
         private const val A_DATE = 1_600_000_000_000L
         private const val NO_SUCH_DOCUMENT = "0123456789abcdef0123456789abcdef"
         private val CONTENT = ByteArray(1_000_003) { (it * 31 + 7).toByte() }

@@ -40,7 +40,7 @@ class EncriSessionTest {
 
     // The test's own scheduler, so a wait inside a request runs on virtual time.
     private fun TestScope.session(io: CoroutineDispatcher = UnconfinedTestDispatcher(testScheduler)) =
-        EncriSession.open(fake, grant, SessionListener(), io)
+        EncriSession.open(fake, grant, SessionListener(), io, IEncriService.VERSION)
 
     @Test
     fun `a document encri describes arrives as one`() =

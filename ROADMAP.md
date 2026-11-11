@@ -68,10 +68,11 @@ item 3.
 - **encri ends a session whose grant's folder is deleted** (L23), which encri 0.1.0 does not: it drops the grant
   and leaves the session open. encri's to build; then `AgainstEncriTest` checks both of L23's promises, a grant
   replaced and a grant's folder deleted, which need a second package to delete it.
-- **`handOffNamed` and `VERSION` 2** (L24), built in step with encri D147, whose handoffs give a made-up name: the
-  method, the client's `handOff(documentIds, withNames)`, `WireNamesTest`'s version, `PROTOCOL.md`'s handoff line,
-  and `AgainstEncriTest` reading a handoff's name both ways and `STATUS_UNSUPPORTED` from version 1. Clients ask for
-  it by a tick on a share or an *open with* (L25).
+- **`handOffNamed` and `VERSION` 2** (L24), built in step with encri D147, whose handoffs give a made-up name.
+  ~~The method, the client's `handOff(documentIds, withNames)`, `WireNamesTest`'s version, `PROTOCOL.md`'s handoff
+  line~~ **built 2026-11-11, with the unit tests of `STATUS_UNSUPPORTED` from version 1**; left: `AgainstEncriTest`
+  reading a handoff's name both ways, against an encri that has built D147. Clients ask for it by a tick on a share
+  or an *open with* (L25).
 - **Publishing** (L1): Maven Central, with `com.systemhalted` verified by a DNS record on
   `systemhalted.com`; the signing of artifacts; and reproducible AARs checked as encri's release is
   (encri D116).

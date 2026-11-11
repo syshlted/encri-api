@@ -13,7 +13,13 @@ than restating it.
 - **Asked by a tick on a share or an *open with*** (L25, encri D148), unticked every time, in the dialog a client
   already shows. No list of apps reads real names, and a client that receives a handoff reads the made-up one.
 
-**Known issues.** Nothing is built; until it is, every handoff gives the document's real name.
+- **Built in the contract and the client** (L24): `handOffNamed`, appended after `end`, and `VERSION` 2;
+  `EncriSession.handOff(documentIds, withNames = false)`, which answers `Failure.UNSUPPORTED` without asking an
+  encri below version 2. `WireNamesTest` holds the method's position and the version, and the client's unit tests
+  both paths and the refusal, which failed with the version check removed. `PROTOCOL.md` describes both.
+  `AgainstEncriTest` reads a handoff's name both ways, and has not run.
+
+**Known issues.** Until encri builds its half (encri D147), every handoff gives the document's real name.
 
 ### What a consent and a deleted folder do to a session — 2026-11-03
 

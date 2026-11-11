@@ -136,7 +136,7 @@ public class com.systemhalted.encri.client.EncriSession : kotlin.AutoCloseable /
   public suspend fun createFile(parentId: kotlin.String, name: kotlin.String, mimeType: kotlin.String, onNameTaken: com.systemhalted.encri.client.NameConflict = …): com.systemhalted.encri.client.EncriResult<com.systemhalted.encri.client.EncriDocument>
   public suspend fun createFolder(parentId: kotlin.String, name: kotlin.String, onNameTaken: com.systemhalted.encri.client.NameConflict = …): com.systemhalted.encri.client.EncriResult<com.systemhalted.encri.client.EncriDocument>
   public suspend fun delete(documentId: kotlin.String): com.systemhalted.encri.client.EncriResult<kotlin.Unit>
-  public suspend fun handOff(documentIds: kotlin.collections.List<kotlin.String>): com.systemhalted.encri.client.EncriResult<kotlin.collections.List<android.net.Uri>>
+  public suspend fun handOff(documentIds: kotlin.collections.List<kotlin.String>, withNames: kotlin.Boolean = …): com.systemhalted.encri.client.EncriResult<kotlin.collections.List<android.net.Uri>>
   public suspend fun list(folderId: kotlin.String): com.systemhalted.encri.client.EncriResult<kotlin.collections.List<com.systemhalted.encri.client.EncriDocument>>
   public suspend fun listPage(folderId: kotlin.String, after: kotlin.String? = …, limit: kotlin.Int = …): com.systemhalted.encri.client.EncriResult<com.systemhalted.encri.client.EncriPage>
   public suspend fun lock(): com.systemhalted.encri.client.EncriResult<kotlin.Unit>

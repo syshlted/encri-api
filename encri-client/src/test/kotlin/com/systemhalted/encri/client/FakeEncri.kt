@@ -129,6 +129,7 @@ internal open class FakeSession : IEncriSession.Stub() {
     var changed: (String, Int) -> EntryResult? = { _, _ -> null }
     var outcome: (String) -> Outcome? = { null }
     var handedOff: (List<String>) -> HandoffResult? = { null }
+    var handedOffNamed: (List<String>) -> HandoffResult? = { null }
     var spaceLeft: () -> SpaceResult? = { null }
     var thumbnail: (String?, Int, Int, IThumbnailListener?) -> ThumbnailTicket? = { _, _, _, _ -> null }
     val cancelled = mutableListOf<Int>()
@@ -235,6 +236,9 @@ internal open class FakeSession : IEncriSession.Stub() {
     }
 
     override fun handOff(documentIds: Array<out String>?): HandoffResult? = handedOff(documentIds.orEmpty().toList())
+
+    override fun handOffNamed(documentIds: Array<out String>?): HandoffResult? =
+        handedOffNamed(documentIds.orEmpty().toList())
 
     override fun revokeHandoffs(uris: Array<out String>?): Outcome? = outcome("revoke ${uris.orEmpty().joinToString()}")
 

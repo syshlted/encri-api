@@ -56,6 +56,7 @@ public class EncriConnection internal constructor(
                                 grant = EncriGrant(rightsOf(grant.rights), documentOf(grant.scope)),
                                 listener = listener,
                                 io = io,
+                                contractVersion = contractVersion,
                                 onClosed = sessions::remove,
                             )
                         sessions += session

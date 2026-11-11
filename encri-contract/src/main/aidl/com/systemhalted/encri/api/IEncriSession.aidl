@@ -70,7 +70,8 @@ interface IEncriSession {
      * content:// URIs another app can open the documents through (encri D117), granted to the
      * calling app for reading, which it may pass on with FLAG_GRANT_READ_URI_PERMISSION. One URI
      * per document, in order. They stop working when the vault locks, the user revokes this app,
-     * or revokeHandoffs is called.
+     * or revokeHandoffs is called. From version 2 the app a URI reaches reads a name made from the
+     * URI, not the document's own (encri D147, L24); handOffNamed gives the real one.
      */
     HandoffResult handOff(in String[] documentIds);
 
@@ -85,4 +86,12 @@ interface IEncriSession {
 
     /** Ends the session. Its open descriptors, writes and handoffs end with it. */
     oneway void end();
+
+    // ---- Version 2 (L24) ------------------------------------------------------------------------
+
+    /**
+     * As handOff, except that the app each URI reaches reads the document's own name. Ask for it
+     * only when the user has said, for this handoff, to send the name (L24, L25).
+     */
+    HandoffResult handOffNamed(in String[] documentIds);
 }

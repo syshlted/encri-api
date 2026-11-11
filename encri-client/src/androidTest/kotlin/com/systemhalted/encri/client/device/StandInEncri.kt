@@ -370,6 +370,9 @@ internal class StandInSession(
     override fun handOff(documentIds: Array<out String>?): HandoffResult =
         HandoffResult().apply { status = IEncriService.STATUS_UNSUPPORTED }
 
+    override fun handOffNamed(documentIds: Array<out String>?): HandoffResult =
+        HandoffResult().apply { status = IEncriService.STATUS_UNSUPPORTED }
+
     override fun revokeHandoffs(uris: Array<out String>?): Outcome =
         Outcome().apply {
             status =

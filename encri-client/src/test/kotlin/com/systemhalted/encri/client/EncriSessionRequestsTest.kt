@@ -50,8 +50,10 @@ class EncriSessionRequestsTest {
     private val listener = SessionListener()
     private var closedBy: EncriSession? = null
 
-    private fun TestScope.session(io: CoroutineDispatcher = UnconfinedTestDispatcher(testScheduler)) =
-        EncriSession.open(fake, grant, listener, io) { closedBy = it }
+    private fun TestScope.session(
+        io: CoroutineDispatcher = UnconfinedTestDispatcher(testScheduler),
+        version: Int = IEncriService.VERSION,
+    ) = EncriSession.open(fake, grant, listener, io, version) { closedBy = it }
 
     @Test
     fun `the grant is read again from encri`() =
@@ -173,6 +175,39 @@ class EncriSessionRequestsTest {
             }
             val uris = (session().handOff(listOf("t1", "t2")) as EncriResult.Ok).value
             assertEquals(listOf("t1", "t2"), uris.map { it.lastPathSegment })
+        }
+
+    @Test
+    fun `a handoff asks for the names only when told to`() =
+        runTest {
+            fun answering(kind: String): (List<String>) -> HandoffResult =
+                { ids ->
+                    HandoffResult().apply {
+                        status = IEncriService.STATUS_OK
+                        uris = ids.map { "content://com.systemhalted.encri.open/$kind-$it" }.toTypedArray()
+                    }
+                }
+            fake.handedOff = answering("plain")
+            fake.handedOffNamed = answering("named")
+            val plain = (session().handOff(listOf("t1")) as EncriResult.Ok).value
+            val named = (session().handOff(listOf("t1"), withNames = true) as EncriResult.Ok).value
+            assertEquals(listOf("plain-t1"), plain.map { it.lastPathSegment })
+            assertEquals(listOf("named-t1"), named.map { it.lastPathSegment })
+        }
+
+    @Test
+    fun `an encri older than version 2 is not asked for the names, and the app is told it cannot`() =
+        runTest {
+            var asked = false
+            fake.handedOffNamed = {
+                asked = true
+                null
+            }
+            val older = session(version = 1)
+            val refused = older.handOff(listOf("t1"), withNames = true) as EncriResult.Failed
+            assertEquals(Failure.UNSUPPORTED, refused.failure)
+            assertFalse(asked)
+            assertTrue(older.isOpen)
         }
 
     @Test

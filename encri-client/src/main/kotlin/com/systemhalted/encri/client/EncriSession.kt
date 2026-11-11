@@ -46,6 +46,8 @@ public class EncriSession private constructor(
     public val grant: EncriGrant,
     private val listener: SessionListener,
     private val io: CoroutineDispatcher,
+    /** The contract version the encri that opened it implements, which says what may be asked of it (L2). */
+    private val contractVersion: Int,
     private val onClosed: (EncriSession) -> Unit,
 ) : AutoCloseable {
     private val ended = AtomicBoolean(false)
@@ -278,11 +280,26 @@ public class EncriSession private constructor(
      * `content://` URIs another app can open the documents through, granted to this app for reading
      * (encri D117). Pass one on with `FLAG_GRANT_READ_URI_PERMISSION`, to *open with* or to the share
      * sheet. They stop working when the vault locks, this app is revoked, or [revokeHandoffs].
+     *
+     * **The app a URI reaches reads a name made from the URI**, not the document's own, unless [withNames]
+     * (encri D147, L24). Pass it only when the user has ticked, for this handoff, to send the name (L25). An encri
+     * older than contract version 2 cannot, and is answered [Failure.UNSUPPORTED] without being asked; such an
+     * encri gives every handoff the real name, which [EncriConnection.contractVersion] tells.
      */
-    public suspend fun handOff(documentIds: List<String>): EncriResult<List<Uri>> =
-        call({ it.handOff(documentIds.toTypedArray()) }, { it.status }, { it.message }) { answer ->
-            answer.uris.orEmpty().map(Uri::parse)
+    public suspend fun handOff(
+        documentIds: List<String>,
+        withNames: Boolean = false,
+    ): EncriResult<List<Uri>> {
+        if (withNames && contractVersion < NAMED_HANDOFFS) {
+            return EncriResult.Failed(Failure.UNSUPPORTED, "this encri cannot send a document's name")
         }
+        val ids = documentIds.toTypedArray()
+        return call(
+            { if (withNames) it.handOffNamed(ids) else it.handOff(ids) },
+            { it.status },
+            { it.message },
+        ) { answer -> answer.uris.orEmpty().map(Uri::parse) }
+    }
 
     public suspend fun revokeHandoffs(uris: List<Uri>): EncriResult<Unit> =
         call({ it.revokeHandoffs(uris.map(Uri::toString).toTypedArray()) }, { it.status }, { it.message }) { }
@@ -395,15 +412,20 @@ public class EncriSession private constructor(
          * caller (L5); a synthetic method is one neither language can call from outside this module.
          */
         @JvmSynthetic
+        @Suppress("LongParameterList") // The constructor's, each from the connection that opens the session.
         internal fun open(
             remote: IEncriSession,
             grant: EncriGrant,
             listener: SessionListener,
             io: CoroutineDispatcher,
+            contractVersion: Int,
             onClosed: (EncriSession) -> Unit = {},
-        ): EncriSession = EncriSession(remote, grant, listener, io, onClosed)
+        ): EncriSession = EncriSession(remote, grant, listener, io, contractVersion, onClosed)
 
         private const val DEFAULT_PAGE = 200
+
+        /** The contract version that added `handOffNamed` (L24). */
+        private const val NAMED_HANDOFFS = 2
 
         /** How much a write hands encri at once: D2's block, and what a pipe's buffer holds. */
         private const val PIECE = 64 * 1024

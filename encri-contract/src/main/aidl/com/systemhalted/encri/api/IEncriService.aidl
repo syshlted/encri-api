@@ -21,9 +21,10 @@ interface IEncriService {
     /**
      * The contract version this file describes. A version adds methods after the last one and
      * changes nothing above it, so a client may call any method whose version is at most what
-     * contractVersion() returns.
+     * contractVersion() returns. Version 2 adds IEncriSession.handOffNamed, and from it a plain
+     * handOff's URIs no longer give the receiving app the document's name (L24).
      */
-    const int VERSION = 1;
+    const int VERSION = 2;
 
     // ---- Where the service is ----------------------------------------------------------------
 

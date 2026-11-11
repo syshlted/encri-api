@@ -129,8 +129,13 @@ gone**: its sessions end, and the app is let in again only by asking.
   picture itself. `cancelThumbnail(requestId)` if it is no longer wanted.
 - **`handOff(ids)`** — a `content://` URI per document, granted to your app for reading, to pass to
   another app with `FLAG_GRANT_READ_URI_PERMISSION`: *open with*, or the share sheet. It reveals neither
-  the document's id nor its name; the app it reaches reads the name through `OpenableColumns`. Every
-  handoff ends when the vault locks, the session ends or `revokeHandoffs` is called.
+  the document's id nor its name. From version 2, the app it reaches reads a name made from the URI through
+  `OpenableColumns`, twelve hex digits and an extension from the document's type, such as `3f9c2a71e0b4.jpg`;
+  an encri at version 1 gives it the document's own (L24). Every handoff ends when the vault locks, the session
+  ends or `revokeHandoffs` is called.
+- **`handOffNamed(ids)`** (version 2) — the same, except that the app it reaches reads the document's own
+  name. Ask for it only when the user has ticked, for this handoff, to send the name, in the dialog you show
+  before a share or an *open with* (L25).
 - **`space()`** — how much more the vault can hold, after encri's framing.
 - **`lock()`** — locks the vault, for every app and for encri.
 

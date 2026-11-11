@@ -56,7 +56,7 @@ class EncriEdgesTest {
     private val fake = FakeSession()
 
     private fun TestScope.session(io: CoroutineDispatcher = UnconfinedTestDispatcher(testScheduler)) =
-        EncriSession.open(fake, EncriGrant(setOf(Right.READ), document()), SessionListener(), io)
+        EncriSession.open(fake, EncriGrant(setOf(Right.READ), document()), SessionListener(), io, IEncriService.VERSION)
 
     // ---- Binding ------------------------------------------------------------------------------
 
