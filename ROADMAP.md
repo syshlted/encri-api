@@ -1,24 +1,31 @@
-# encri-api — Roadmap
+# encri-api — roadmap
 
-What is next, and in what order. `AGENTS.md` is why; `CHANGELOG.md` is what happened. When this file
-and `AGENTS.md` disagree, `AGENTS.md` wins.
+What is next, and in what order. Why is in `docs/decisions/`, and what happened is in `CHANGELOG.md`. When they
+disagree, the decision records win.
 
-Severities, as in encri: **S1** loses a user's data or lets the wrong app read it · **S2** a wrong
-answer a user cannot tell from a right one · **S3** wrong under a narrow race, or a cost nobody chose ·
-**S4** debt.
+## Severity
+
+| | Meaning |
+|---|---|
+| **S1** | Data loss, a confidentiality breach, or a vault that will not open |
+| **S2** | A user-visible wrong answer or failure, with no workaround |
+| **S3** | Wrong under a narrow race, or an honest limit that needs disclosing |
+| **S4** | Waste, cosmetics, or documentation that contradicts the code |
+
+Severity is about the consequence if it happens, not the odds of it happening.
 
 ## Now
 
 The scaffold is done (L1–L4). The design every step below implements is encri's: D113 for the
 transport, D114 for who may read the vault, D115 for the repositories, D117 and D118 for the handoff.
-encri's own half — the service, the consent screen, the grant table — is encri's build-order step 13,
-item 3.
+encri's own half — the service, the consent screen, the grant table — ~~is encri's build-order step 13,
+item 3~~ **was built 2026-10-23 as encri D120**.
 
 1. ~~**The spike encri D113 owes**, on the four phones: hand a `SharedMemory` region over Binder
    read-only and confirm the client cannot make its mapping writable, read what `/proc/self/fd` calls
    it, and measure a Binder round trip. It decides whether the client gets a read path that skips
-   AppFuse. Where it lives is an open question (`AGENTS.md`).~~ **Done 2026-10-23 (L14)** on three phones and
-   two emulators: the client cannot write through the region, and a block costs about a third of what it costs
+   AppFuse. Where it lives is an open question (`docs/decisions/open-questions.md`).~~ **Done 2026-10-23 (L14)**
+   on three phones and two emulators: the client cannot write through the region, and a block costs about a third of what it costs
    through AppFuse once encri's decrypt is counted. **Not built**, flagged: it waits for a client that reads
    content in its own process, and for the S24, whose memfd-backed `SharedMemory`, if it has one, nothing here
    has run.
@@ -47,6 +54,14 @@ item 3.
    (L9).
 8. **Re-read `gradle/osv-scanner.toml` by 2027-01-22**, when every entry in it expires and its
    advisory comes back as an alert. Renew an entry only if its reason still holds.
+9. **The backup app's surface in the contract** (encri D137, D146; encri-backup K1). Encri Backup,
+   `com.systemhalted.encri.backup` in `../encri-backup`, copies a vault's sealed generations and encrypted blobs into
+   a folder whose grant it holds, and holds no key: encri prepares, plans a prune and restores. The contract has no way for it to ask
+   yet, and L21 took `ACTION_BACKUPS` out until it has. What the contract must carry, and the six questions open on
+   it, are in encri-backup's `encri-boundary` brief (`../encri-backup/.claude/rules/encri-boundary.md`) and its
+   roadmap's item 1: a backup right that works while the vault is locked, the folder's contents going into encri, and
+   blob streams coming out. It is designed here, as a decision record, with encri's half in encri's. Its registry entry
+   (L15) waits on its signing key, which is open in K1. Undesigned.
 
 ## Before the first release
 
@@ -65,9 +80,10 @@ item 3.
   see AGP's compilations yet.
 - ~~**The Kotlin floor for consumers** (L3): `languageVersion`, `apiVersion`, `coreLibrariesVersion`. Since
   L9 the default is an app on Kotlin 2.3 or newer, receiving stdlib 2.4.21.~~ **Kotlin 2.1, stdlib 2.2.10 (L17).**
-- **encri ends a session whose grant's folder is deleted** (L23), which encri 0.1.0 does not: it drops the grant
-  and leaves the session open. encri's to build; then `AgainstEncriTest` checks both of L23's promises, a grant
-  replaced and a grant's folder deleted, which need a second package to delete it.
+- **`AgainstEncriTest` checks both of L23's promises**, a grant replaced and a grant's folder deleted, which need a
+  second package to delete it. The second waits for encri to end a session whose grant's folder is deleted, which
+  encri 0.1.0 does not: it drops the grant and leaves the session open. That half is encri's to build, and is filed
+  in encri's roadmap as **encri B143**.
 - **`handOffNamed` and `VERSION` 2** (L24), built in step with encri D147, whose handoffs give a made-up name.
   ~~The method, the client's `handOff(documentIds, withNames)`, `WireNamesTest`'s version, `PROTOCOL.md`'s handoff
   line~~ **built 2026-11-11, with the unit tests of `STATUS_UNSUPPORTED` from version 1**; left: `AgainstEncriTest`
@@ -87,7 +103,7 @@ item 3.
   push: signed commits, a review, `ci`, `commit-policy`, both `codeql` jobs and the `dependencies` job for
   what ships required, and code scanning merge protection, so a pull request that adds a high or critical
   alert — from CodeQL or from the build-tooling scan — cannot merge (L7, L10).
-- **Merge commits or rebases only**, never a squash (`AGENTS.md`, *Repo conventions*).
+- **Merge commits or rebases only**, never a squash (`docs/conventions.md`).
 - **Actions must be pinned to a full commit SHA**, a repository setting that is off: every workflow
   already pins (encri D7), and the setting makes an unpinned one fail rather than run.
 - **The first `codeql` run on `master` is the baseline** a pull request's results are compared with.
@@ -95,11 +111,11 @@ item 3.
   scanned all 9 of the client's main Kotlin files. **Still to check:** that it lists the aidl tool's Java
   (L7). The run log counts only Kotlin, so the answer is on the repository's CodeQL status page.
 
-## Bug queue
+## Bugs
 
 Empty.
 
-## After encri-api
+## Later
 
-**The file manager**, in `../encri-files`, built against this library as any other app is
-(encri D112, D115).
+- **The shared-memory read path** (L14), measured and not built: when a client reads a document's bytes in its own
+  process, and after the S24 has run the spike on memfd-backed `SharedMemory`. Item 1 in *Now* has the measurements.

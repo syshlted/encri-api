@@ -3,8 +3,9 @@
 A client-only Android library for reaching an encri vault without the system file picker. It binds to
 encri's companion service over AIDL; the service itself is part of encri, not of this library.
 
-**Pre-release. Nothing is published.** The client has run against encri on two phones (`AGENTS.md` L13). See
-[`PROTOCOL.md`](PROTOCOL.md) for the protocol and [`ROADMAP.md`](ROADMAP.md) for what comes next.
+**Pre-release. Nothing is published.** The client has run against encri on two phones (L13). See
+[`PROTOCOL.md`](PROTOCOL.md) for the protocol, [`ROADMAP.md`](ROADMAP.md) for what comes next and
+[`docs/decisions/`](docs/decisions/INDEX.md) for why it is built the way it is.
 [`FINGERPRINTS.md`](FINGERPRINTS.md) lists the keys encri and Encri Files are signed with.
 
 An app declares one dependency, the client, and codes against its types alone. The contract comes
@@ -36,9 +37,9 @@ when (val connected = Encri.connect(context)) {
 ```
 
 Backup files stay in encri: `Encri.saveBackupFileIntent()` and `restoreIntent()` open encri's own screens for them
-with `startActivity`, and need no session (`AGENTS.md` L20, L21).
+with `startActivity`, and need no session (L20, L21).
 
-An app needs Kotlin 2.1 or newer (`AGENTS.md` L17), and R8 needs no rules for the library (L18).
+An app needs Kotlin 2.1 or newer (L17), and R8 needs no rules for the library (L18).
 
 Every request is a `suspend` function that answers a `EncriResult` and never throws. Before binding,
 the library checks that the encri installed is signed by a key the app trusts: by default, the app's
@@ -55,7 +56,11 @@ lefthook install    # once per clone: signed, Conventional commits and the local
 
 A change to the public API fails a test until the dump in `api/` is rewritten with `-PupdateApi` (L16).
 
+## Testing on a device
+
 The device tests run on a phone with `scripts/device/run-device-tests.sh <serial>`, and against the encri installed
 there with its vault's passphrase in `ENCRI_PASSPHRASE`; CI runs them on emulators, where encri is not installed.
+
+## Licence
 
 Licensed under the [Apache License 2.0](LICENSE).

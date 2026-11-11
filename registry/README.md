@@ -2,14 +2,14 @@
 
 encri's consent screen says who wrote an app asking to reach the vault when the app is listed here. Each
 encri release builds in the registry of the encri-api release it was built against, so the check needs no
-network (encri D114, D115; `AGENTS.md` L15).
+network (encri D114, D115; L15).
 
 **Being listed never grants access.** It changes what the consent screen says, and the user still decides.
 An app that is not listed can be let in too, without the label — a build somebody made from source and
 signed with their own key, for one. The one thing an entry takes away is a version it refuses: encri does
 not let that build in at all.
 
-**It lists one app**, encri's own file manager, since 2026-10-28 (`AGENTS.md` L22).
+**It lists one app**, encri's own file manager, since 2026-10-28 (L22).
 
 ## Adding an app
 

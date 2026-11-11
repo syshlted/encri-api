@@ -1,11 +1,32 @@
-# encri-api — Changelog
+# encri-api — changelog
 
-What happened, one entry per roadmap item. `AGENTS.md` is why, and an entry links to a decision rather
-than restating it.
+What happened, newest first. Why is in `docs/decisions/`, and what is next is in `ROADMAP.md`.
 
 ## Unreleased
 
-### A handoff names its document only when asked — 2026-11-11
+### The documentation takes the suite's layout (2026-11-11)
+
+**Completed (L26).** The decision log left `AGENTS.md`, as encri's did (encri D127). L1 to L25 are records of their own
+in `docs/decisions/`, word for word, with an index and footers that `scripts/docs/decision-index.py` writes, and
+`amendments.md` holds the corrections the later records had already made. The status, the build order, the
+conventions, the development environment and the open questions moved to `docs/` unchanged; a rebuild of the old
+file from the new ones matched it byte for byte. `AGENTS.md` is the level-0 guide now, and five briefs in
+`.claude/rules/` load with their files, every tracked file covered by one (`scripts/docs/brief-coverage.py`).
+`ROADMAP.md`, this file, the README and the registry's README take the suite's format (`docs/documentation.md`), and
+cite the records rather than `AGENTS.md`.
+
+- **The roadmap's severity line**, which said it was encri's and was not, is the suite's table.
+- **encri's half of L23**, ending a session whose grant's folder is deleted, is encri B143; the roadmap keeps
+  `AgainstEncriTest`'s half.
+- **The backup app's surface in the contract** is an item of its own in *Now* (encri D146, encri-backup K1), where it
+  had been only inside a struck-through one.
+- **The file manager**, the roadmap's last section, is done and went to `docs/status.md`.
+
+**Known issues.** Code and older documents still cite `AGENTS.md Lnn`, which `AGENTS.md` says how to resolve (L26,
+flagged). Lines the briefs found stale against a later record are listed in each brief's *Open here* and are not
+corrected here.
+
+### A handoff names its document only when asked (2026-11-11)
 
 - **Decided, not built** (L24, encri D147): from encri D147 on, the app a handoff reaches reads a name made from the
   handoff's token. `handOffNamed`, appended in contract version 2, asks for the real one on the user's word.
@@ -21,7 +42,7 @@ than restating it.
 
 **Known issues.** Until encri builds its half (encri D147), every handoff gives the document's real name.
 
-### What a consent and a deleted folder do to a session — 2026-11-03
+### What a consent and a deleted folder do to a session (2026-11-03)
 
 - **What the user allows replaces the app's grant**, with exactly the rights asked for, and ends its sessions; a
   refusal changes nothing (L23). `PROTOCOL.md`, `authorizationIntent` and the contract's comments say so.
@@ -29,7 +50,7 @@ than restating it.
 
 **Known issues.** encri 0.1.0 leaves that session open, telling it nothing; encri owes the change (L23).
 
-### encri's release key — 2026-10-28
+### encri's release key (2026-10-28)
 
 - **Encri Files is in the registry**, under encri's app signing certificate, so encri's consent screen names who wrote
   it and where its source is (L22).
@@ -39,7 +60,7 @@ than restating it.
 
 **Known issues.** Encri Files' Play upload key is encri's until Google resets it to its own (L22).
 
-### `ACTION_BACKUPS` removed before the first release — 2026-10-27
+### `ACTION_BACKUPS` removed before the first release (2026-10-27)
 
 - **The contract no longer names encri's automatic backups screen**, and the client has no `Encri.backupsIntent()`
   (L21). encri took the scheduled backup out for two backup apps of their own (encri D137), so the action would have
@@ -48,7 +69,7 @@ than restating it.
 
 **Known issues.** How a backup app reaches encri is undesigned, so the contract has no action for it yet (encri D137).
 
-### encri's backup screens, by action — 2026-10-26
+### encri's backup screens, by action (2026-10-26)
 
 - **The contract names three of encri's screens**: `ACTION_BACKUPS`, `ACTION_SAVE_BACKUP_FILE` and `ACTION_RESTORE`,
   beside `ACTION_UNLOCK`. They are constants, so the contract is still version 1 (L20, encri D123).
@@ -59,7 +80,7 @@ than restating it.
 **Known issues.** An encri that predates the actions does not answer them, so a client has to resolve the Intent
 before offering an entry (L20).
 
-### The rename to encri — 2026-10-23
+### The rename to encri (2026-10-23)
 
 **Completed (L19).** Every package, artifact, contract name and repository name spells encri, with the suite (encri
 D124). A client built before this cannot reach an encri built after it; nothing has been released, so nothing
@@ -68,7 +89,7 @@ outside this repository's tests is one.
 **Known issues.** The history before this entry still carries the earlier name, and has been public since the first
 push; it is not rewritten (L19, flagged).
 
-### Ready for a first release, but for publishing — 2026-10-23
+### Ready for a first release, but for publishing (2026-10-23)
 
 - **The public API is dumped and checked** in `api/encri-client.api` and `api/encri-registry.api`, through
   kotlin-reflect, by `:api-dump`; `-PupdateApi` writes a new dump (L16).
@@ -82,7 +103,7 @@ visibility at the top level; the dumper reads it from Kotlin (L16).
 
 **Known issues.** Publishing to Maven Central waits for the namespace and a signing decision (L1).
 
-### The registry — 2026-10-23
+### The registry (2026-10-23)
 
 - `encri-registry`: a JVM module with no dependencies, the format of `registry/<package>.app`, and a recognition per
   app asking — reviewed, signed with another key, refused, or not listed (L15).
@@ -92,7 +113,7 @@ visibility at the top level; the dumper reads it from Kotlin (L16).
 
 **Known issues.** Empty: no app has a release key to list. The fingerprints file waits for the same keys.
 
-### The shared-memory spike — 2026-10-23
+### The shared-memory spike (2026-10-23)
 
 - `SharedMemorySpikeTest` and `SpikeService`: a region handed out read-only, and every way of writing through it
   tried, on the G6, the S9, the A20 and emulators at API 27 and 36. Refused everywhere; encri's copy unchanged (L14).
@@ -102,7 +123,7 @@ visibility at the top level; the dumper reads it from Kotlin (L16).
 **Known issues.** memfd-backed `SharedMemory`, which a vendor ROM at API 34+ may use, has not been measured: every
 target here was ashmem. The read path is not built (L14, flagged).
 
-### Device tests — 2026-10-23
+### Device tests (2026-10-23)
 
 - `CrossProcessTest`: the client over a real Binder against a stand-in service in a process of its own, and one built
   against an older contract. An unknown transaction reads as 0 over a real `BinderProxy` (L2); a process that dies
@@ -124,7 +145,7 @@ target here was ashmem. The read path is not built (L14, flagged).
 **Known issues.** The suite against encri has not run on the G6 or the S24, and `instrumented.yml` has not run on
 GitHub.
 
-### The first push, and commit-policy checks a force push — 2026-10-23
+### The first push, and commit-policy checks a force push (2026-10-23)
 
 - **Bug fixed.** A push whose `before` is not in the runner's clone made `commit-policy` check no commit and pass.
   A force push is that push: its `before` is the commit it replaced, which the checkout does not fetch. `git
@@ -139,7 +160,7 @@ GitHub.
   that `c3b4c92` was not in its clone, checked all 15 commits, and GitHub reports every one signed. `ci`,
   `codeql` for both languages and `dependencies` passed, with no code-scanning alert.
 
-### The client — 2026-10-23
+### The client (2026-10-23)
 
 - `Encri.connect` checks encri's signing certificate before it binds, against the app's own key or a pinned
   certificate, over encri's signing history at every API level; then binds by action and asks the version (L12).
@@ -162,7 +183,7 @@ GitHub.
 
 **Known issues.** Not run against a real encri on a phone (roadmap item 6).
 
-### The contract's first surface — 2026-10-22
+### The contract's first surface (2026-10-22)
 
 - `IEncriService` gains `openSession`; `IEncriSession` carries everything a file manager does: stat, list in
   pages, measure, read, write, create, rename, move, delete, set times, previews, handoffs, space and lock. Three
@@ -171,7 +192,7 @@ GitHub.
 - `WireNamesTest` pins every interface token and every method's transaction code; `ParcelableEvolutionTest` runs
   the rule that a parcelable's fields are only ever appended.
 
-### Dependency scanning — 2026-10-22
+### Dependency scanning (2026-10-22)
 
 - `dependencies.yml`: OSV-Scanner over the two release runtime classpaths, failing on any advisory,
   and over every artifact the build pins, reported to the Security tab (L10).
@@ -181,7 +202,7 @@ GitHub.
 - Both scans checked both ways locally: a planted vulnerable runtime dependency fails the first, and an
   advisory taken out of the triage file comes back in the second (L10).
 
-### Kotlin 2.4.21 — 2026-10-22
+### Kotlin 2.4.21 (2026-10-22)
 
 - The build compiles with Kotlin 2.4.21 rather than the 2.2.10 AGP depends on, for GHSA-r937-wjx7-w2jp,
   code execution through the Kotlin build cache. The same move in encri as its D119 (L9).
@@ -192,7 +213,7 @@ GitHub.
 **Known issues.** The Kotlin an app needs to compile against the client is now 2.3 or newer by
 default, still undecided (L3).
 
-### The contract's behavior is tested — 2026-10-22
+### The contract's behavior is tested (2026-10-22)
 
 - `UnansweredTransactionTest` runs L2's claim through the generated proxy over a real `Parcel`: a
   binder that does not know transaction 1 answers 0 with no exception, beside a control that answers
@@ -203,7 +224,7 @@ default, still undecided (L3).
   `koverVerify` (L8).
 - Dependency verification metadata: 619 artifacts, up from 541, all of them in encri's.
 
-### Code scanning — 2026-10-22
+### Code scanning (2026-10-22)
 
 - `codeql.yml`: CodeQL's `security-extended` suite over the Kotlin and Java the release build compiles,
   and over the workflows, on pull requests, pushes to `master` and weekly. Checked locally with the CLI
@@ -213,13 +234,13 @@ default, still undecided (L3).
 - Dependency scanning is not added: all 13 known advisories in the frozen dependency set are in build
   tooling, and nothing that ships has one. Scanning what ships is in `ROADMAP.md` (L7).
 
-### The repository is encri-api — 2026-10-22
+### The repository is encri-api (2026-10-22)
 
 - Renamed from `libencri`: the repository, its directory and the root project's name. The artifacts,
   their group and both packages are unchanged (L6).
 - The remote is `git@syshlt-github:syshlted/encri-api.git`. Nothing has been pushed.
 
-### The client hides the contract — 2026-10-22
+### The client hides the contract (2026-10-22)
 
 - `encri-client` depends on `encri-contract` with `implementation`, so an app sees only the client's
   own types (L5). A guard that the client's public signatures name no contract type is owed before
@@ -227,7 +248,7 @@ default, still undecided (L3).
 - The group stands, because the user owns `systemhalted.com`; the artifacts will go to Maven Central
   (L1).
 
-### A client-only library, and its coordinates — 2026-10-22
+### A client-only library, and its coordinates (2026-10-22)
 
 - The artifacts are `com.systemhalted.encri:encri-client`, which is all an app declares, and
   `com.systemhalted.encri:encri-contract`, which the client brings with it and encri's service
@@ -236,7 +257,7 @@ default, still undecided (L3).
 - minSdk 27 is a hard limit and `com.systemhalted.encri.api` is the contract's package, both confirmed
   by the user (L1, L2).
 
-### Scaffold — 2026-10-22
+### Scaffold (2026-10-22)
 
 - The Gradle project: `:contract` and `:client`, Android libraries at minSdk 27 in explicit API mode,
   as `com.systemhalted.libencri:contract` and `:client` (L1) — renamed the same day, above.
