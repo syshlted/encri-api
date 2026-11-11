@@ -117,9 +117,6 @@ encri's service follows them (encri D115). This brief is level 1; full records a
 
 ## Open here
 - `VERSION` 2 before the first `v*` tag, while apps speak version 1 (L24, flagged).
-  Not amended.
-- `PROTOCOL.md` still says *This document describes version 1*, and describes `handOffNamed`, which is version 2. Not
-  corrected.
 - L23's second promise is ahead of encri, which leaves the session open: encri B143.
 - The backup app's surface (encri D137, D146; encri-backup K1) is undesigned. It is designed here as a record when it
   is, and adds to the contract (`ROADMAP.md`, *Now*). L21's text still names D137's two backup apps, which encri D146

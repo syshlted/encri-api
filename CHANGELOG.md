@@ -4,6 +4,14 @@ What happened, newest first. Why is in `docs/decisions/`, and what is next is in
 
 ## Unreleased
 
+### `PROTOCOL.md` describes version 2, and L24 records its build (2026-11-11)
+
+**Fixed (S4).** `PROTOCOL.md` said it described version 1 while describing `handOffNamed`, which is version 2. It says
+version 2 now, and that a method added after version 1 is marked with the version it came in. L24 still said *Nothing
+is built* and *Verified: nothing*, though `a414543` built it the same day; both are struck through in place, with
+what was built and verified, and `amendments.md` has the entry. `AgainstEncriTest` reading a handoff's name both ways
+is still unrun.
+
 ### The documentation takes the suite's layout (2026-11-11)
 
 **Completed (L26).** The decision log left `AGENTS.md`, as encri's did (encri D127). L1 to L25 are records of their own

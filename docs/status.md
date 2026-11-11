@@ -27,7 +27,7 @@ screen left encri for two backup apps of their own (encri D137), and `ACTION_BAC
 seen to do; encri owes ending the session whose grant's folder is deleted.
 
 **A handoff names its document only when the client asks, as of 2026-11-11 (L24, encri D147)**, by a method that
-comes with contract version 2. Nothing is built: the method lands with encri's half. **The user asks, by a tick in the dialog before a share or an *open
+comes with contract version 2. ~~Nothing is built: the method lands with encri's half.~~ **Built the same day, in `a414543`.** **The user asks, by a tick in the dialog before a share or an *open
 with* (L25, encri D148)**, and no list of apps is kept.
 
 ## Build order

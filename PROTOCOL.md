@@ -31,7 +31,8 @@ normative; where they and this page disagree, the `.aidl` files are right.
 ## Versions
 
 - **The first call is `contractVersion()`**, transaction 1. It returns the newest version of this
-  contract the installed encri implements. This document describes version 1.
+  contract the installed encri implements. This document describes version 2. A method that came after version 1
+  is marked with the version it came in, as `handOffNamed` is (version 2); an encri at version 1 lacks it.
 - A version only ever adds methods after the last one. A client may call a method if its version is
   at most what `contractVersion()` returned.
 - **Never call a method above that version.** An older encri does not refuse it: the call returns `0`,

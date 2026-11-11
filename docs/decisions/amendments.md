@@ -6,6 +6,9 @@ Each entry corrects a record. Its bold lead names the record possessively ("L20'
 
 ## Amendments
 
+- **L24's *nothing is built* was overtaken by its build (2026-11-11).** `handOffNamed`, `VERSION` 2 and the client's
+  `withNames` landed in `a414543`, the day encri built D147. `AgainstEncriTest` reading a handoff's name both ways is
+  written and has not run. L24 marks it in place.
 - **L24's companions offered the name on a share and not on *open with*, amended by L25 (2026-11-11).** A client
   asks for `handOffNamed` on a tick the user makes, "Send its name", unticked every time, in the dialog it shows
   before a share or an *open with* alike. No list of apps reads real names. L24 marks it in place.
