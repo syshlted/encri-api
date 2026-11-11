@@ -4,6 +4,12 @@ What happened, newest first. Why is in `docs/decisions/`, and what is next is in
 
 ## Unreleased
 
+### Pushed, with every workflow passing (2026-11-11)
+
+**Completed.** `master` went to GitHub up to `c5460bf`, six signed commits, `a414543` among them, so the commit encri's
+pin names can now be fetched by CI. `ci`, `codeql`, `commit-policy`, `dependencies` and `instrumented` all passed on
+it. `instrumented.yml` had run on GitHub since 2026-10-27 without its runs being recorded here; all five passed.
+
 ### `PROTOCOL.md` describes version 2, and L24 records its build (2026-11-11)
 
 **Fixed (S4).** `PROTOCOL.md` said it described version 1 while describing `handOffNamed`, which is version 2. It says

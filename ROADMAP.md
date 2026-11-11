@@ -47,8 +47,9 @@ item 3~~ **was built 2026-10-23 as encri D120**.
 6. ~~**Device tests** for the client against a real encri, which needs encri's APK on the device or
    emulator; then `instrumented.yml`.~~ **Done 2026-10-23 (L13)**: a stand-in suite on three phones and the API 27
    emulator, the suite against encri on the S9 and the A20, and `instrumented.yml` at API 27 and 36. Left: the
-   suite against encri on the G6, which has no encri and a secure keyguard, and on the S24; and the workflow's
-   first run on GitHub, which waits for a push.
+   suite against encri on the G6, which has no encri and a secure keyguard, and on the S24; ~~and the workflow's
+   first run on GitHub, which waits for a push~~. **The workflow first ran on GitHub 2026-10-27, at `618e392`, and
+   its five runs to 2026-11-11 all passed.**
 7. ~~**Dependency scanning of what ships** (L7)~~ **Done 2026-10-22 (L10)**, with the build's tooling
    reported as well, against a triage file. The one advisory with a way in was fixed by Kotlin 2.4.21
    (L9).

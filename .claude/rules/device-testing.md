@@ -69,6 +69,7 @@ records are in `docs/decisions/`.
   2.12 ms on the A20, 1.55 ms against 4.68 ms on the G6. With encri's decrypt, about 2.5 to 3 times faster. (L14)
 - What a consent and a deleted folder do to a session was measured by encri-images' probes on the G6 and the A20, not
   by this suite. (L23)
+- `instrumented.yml` on GitHub: five runs from 2026-10-27 (`618e392`) to 2026-11-11 (`c5460bf`), all passed.
 
 ## Decisions
 | | Why it matters here |
@@ -84,8 +85,6 @@ records are in `docs/decisions/`.
 
 ## Open here
 - `AgainstEncriTest` has not run on the G6, which has no encri and a secure keyguard, or on the S24.
-- Whether `instrumented.yml` has run on GitHub is not recorded: `ROADMAP.md` waits for a push, and the push of
-  2026-10-23 records `ci`, `commit-policy`, `codeql` and `dependencies` only.
 - `AgainstEncriTest` checks neither of L23's promises yet. The deleted folder needs a second package to delete it, and
   encri to end the session (encri B143).
 - `AgainstEncriTest` reading a handoff's name both ways is written and has not run; it needs an encri that has built
