@@ -49,7 +49,8 @@ screen left encri for two backup apps of their own (encri D137), and `ACTION_BAC
 seen to do; encri owes ending the session whose grant's folder is deleted.
 
 **A handoff names its document only when the client asks, as of 2026-11-11 (L24, encri D147)**, by a method that
-comes with contract version 2. Nothing is built: the method lands with encri's half.
+comes with contract version 2. Nothing is built: the method lands with encri's half. **The user asks, by a tick in the dialog before a share or an *open
+with* (L25, encri D148)**, and no list of apps is kept.
 
 ## Relationship to encri
 
@@ -1135,7 +1136,8 @@ true of every encri before D147, and is rewritten when the method lands.
 **A handoff that carries the name is a method of its own**: `HandoffResult handOffNamed(in String[] documentIds)`,
 appended after the last (L2) and alike to `handOff` in everything but the name the receiving app reads. In the
 client it is `EncriSession.handOff(documentIds, withNames = false)`. A client asks for it only on the user's word
-for that handoff. encri-files and encri-images are to offer it on a share and not on *open with*, and their logs
+for that handoff. encri-files and encri-images are to offer it ~~on a share and not on *open with*~~ **as a tick,
+unticked every time, in the dialog each shows before a share or an *open with* (amended by L25)**, and their logs
 record the screen.
 
 **It comes with `VERSION` 2.** encri 0.1.0 and Encri Files 0.1.0 speak version 1 (encri D136), so the method
@@ -1157,6 +1159,27 @@ which encri would serve without ever having stored it, on the word of an app tha
 
 **Verified:** nothing; this records the shape. The method, the version, `WireNamesTest`, `PROTOCOL.md` and
 `AgainstEncriTest` reading a handoff's name both ways come with encri's build (`ROADMAP.md`).
+
+---
+
+### L25 — Which app receives a handoff plays no part in its name, and the user's tick is asked on *open with* too
+*2026-11-11 · accepted on the user's word, with encri D148, which has the reasons; **flagged for veto on one point**
+(below). Amends L24, whose companions offered the name on a share alone. Nothing here changes the wire.*
+
+**The receiving app's identity is not consulted.** encri keeps no list of apps that read real names, and a client
+that receives a handoff, a companion among them, reads the made-up name like any other app. The handoff is made
+before the system's chooser opens, so the app it will reach is not known when the name is decided.
+
+**A client asks for `handOffNamed` on a tick the user makes**, "Send its name", unticked every time and never
+remembered, in the dialog it already shows before a handoff: on a share and on *open with* alike. A client that
+opens a document without asking sends no name. This is guidance to clients, which encri cannot enforce: a client
+holding `RIGHT_READ` can read the name over its session anyway (L11).
+
+*Rejected:* a list of apps the user keeps in encri, which would need encri to recognise the receiving app at its
+handoff provider, and would put the decision away from the moment of sending (encri D148). *Rejected:* real names for
+any companion that receives a handoff, on the same recognition.
+
+**Flagged for veto:** the tick on *open with*, where a viewer's title bar then shows the real name.
 
 ---
 

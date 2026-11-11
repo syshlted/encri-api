@@ -70,7 +70,8 @@ item 3.
   replaced and a grant's folder deleted, which need a second package to delete it.
 - **`handOffNamed` and `VERSION` 2** (L24), built in step with encri D147, whose handoffs give a made-up name: the
   method, the client's `handOff(documentIds, withNames)`, `WireNamesTest`'s version, `PROTOCOL.md`'s handoff line,
-  and `AgainstEncriTest` reading a handoff's name both ways and `STATUS_UNSUPPORTED` from version 1.
+  and `AgainstEncriTest` reading a handoff's name both ways and `STATUS_UNSUPPORTED` from version 1. Clients ask for
+  it by a tick on a share or an *open with* (L25).
 - **Publishing** (L1): Maven Central, with `com.systemhalted` verified by a DNS record on
   `systemhalted.com`; the signing of artifacts; and reproducible AARs checked as encri's release is
   (encri D116).

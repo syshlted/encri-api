@@ -10,6 +10,9 @@ than restating it.
 - **Decided, not built** (L24, encri D147): from encri D147 on, the app a handoff reaches reads a name made from the
   handoff's token. `handOffNamed`, appended in contract version 2, asks for the real one on the user's word.
 
+- **Asked by a tick on a share or an *open with*** (L25, encri D148), unticked every time, in the dialog a client
+  already shows. No list of apps reads real names, and a client that receives a handoff reads the made-up one.
+
 **Known issues.** Nothing is built; until it is, every handoff gives the document's real name.
 
 ### What a consent and a deleted folder do to a session — 2026-11-03
