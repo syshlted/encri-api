@@ -4,6 +4,19 @@ What happened, newest first. Why is in `docs/decisions/`, and what is next is in
 
 ## Unreleased
 
+### A handoff's name, read both ways against encri at API 30 and 33 (2026-11-12)
+
+**Completed (L24).** `AgainstEncriTest` ran against encri at encri-core `e632c7e`, which has built encri D147, from the
+client's test APK at `7cb623a`, whose code is `a414543`'s: 10 of 10, none skipped, on the A20 (API 30) and on Waydroid
+(API 33), the first `AgainstEncriTest` at API 33, each against a new test vault. Step 7 read the made-up
+name from a plain handoff and the real one from `withNames = true`. `CrossProcessTest` was 10 of 10 on both, Waydroid's
+the first at API 33. Checked by breaking the client: with `EncriSession.handOff` ignoring `withNames`, step 7 failed on
+the A20 with `expected:<[handed].txt> but was:<[47bfd8b3cf5c].txt>` and the other nine passed. L24's *Not run* is
+struck through in place, and `amendments.md` has the entry.
+
+**Known issues.** `AgainstEncriTest` checks neither of L23's promises yet, the second waiting on encri B143, and has
+not run on the G6 or the S24.
+
 ### Pushed, with every workflow passing (2026-11-11)
 
 **Completed.** `master` went to GitHub up to `c5460bf`, six signed commits, `a414543` among them, so the commit encri's

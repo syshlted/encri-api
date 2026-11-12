@@ -58,6 +58,12 @@ records are in `docs/decisions/`.
 ## Measured, not assumed
 - `CrossProcessTest` 10 of 10 on the G6 (28), the S9 (29), the A20 (30) and the API 27 emulator. `AgainstEncriTest` 10
   of 10 on the S9 in 8.4 s and the A20 in 11.3 s, from a locked vault and no grant. (L13)
+- Against encri at encri-core `e632c7e`, which has built encri D147: `AgainstEncriTest` 10 of 10, none skipped, on the
+  A20 (30) and on Waydroid on bigtab01 (33), 2026-11-12, the first at API 33, each against a new test vault; step 7
+  reads a handoff's name both ways. `CrossProcessTest` 10 of 10 on both, Waydroid's the first at API 33,
+  2026-11-11. (L24)
+- Making `EncriSession.handOff` ignore `withNames` fails step 7 alone on the A20,
+  `expected:<[handed].txt> but was:<[47bfd8b3cf5c].txt>`; restored, 10 of 10. (L24)
 - Over a real Binder: an unknown transaction reads as 0; killing encri's process ends the session and Android rebinds;
   a refused write gets `EPIPE` and no SIGPIPE; `closeWithError` reaches the other process's `checkError`. (L13)
 - An open descriptor goes on serving across a lock; the session answers `LOCKED`, and the same session works after
@@ -77,7 +83,7 @@ records are in `docs/decisions/`.
 | L13 | The two suites, the seam, the script, pressing encri's screens; one veto flag |
 | L14 | The spike, its numbers, and the read path not built; one veto flag |
 | L23 | Two promises `AgainstEncriTest` does not check yet |
-| L24 | A handoff's name read both ways, owed |
+| L24 | A handoff's name read both ways, run at API 30 and 33 |
 | L2, L8 | The zero, under Robolectric then over a real Binder |
 | L12 | The client behaviours the device tests confirm |
 | L3 | The instrumented matrix, added by L13 |
@@ -87,8 +93,6 @@ records are in `docs/decisions/`.
 - `AgainstEncriTest` has not run on the G6, which has no encri and a secure keyguard, or on the S24.
 - `AgainstEncriTest` checks neither of L23's promises yet. The deleted folder needs a second package to delete it, and
   encri to end the session (encri B143).
-- `AgainstEncriTest` reading a handoff's name both ways is written and has not run; it needs an encri that has built
-  D147. (L24)
 - memfd-backed `SharedMemory` is unmeasured; the S24 is the phone that would say. The read path is not built (L14,
   flagged). Sequential reads, where AppFuse has readahead, were not measured.
 

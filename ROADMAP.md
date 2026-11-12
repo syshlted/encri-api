@@ -85,11 +85,12 @@ item 3~~ **was built 2026-10-23 as encri D120**.
   second package to delete it. The second waits for encri to end a session whose grant's folder is deleted, which
   encri 0.1.0 does not: it drops the grant and leaves the session open. That half is encri's to build, and is filed
   in encri's roadmap as **encri B143**.
-- **`handOffNamed` and `VERSION` 2** (L24), built in step with encri D147, whose handoffs give a made-up name.
+- ~~**`handOffNamed` and `VERSION` 2** (L24), built in step with encri D147, whose handoffs give a made-up name.~~
   ~~The method, the client's `handOff(documentIds, withNames)`, `WireNamesTest`'s version, `PROTOCOL.md`'s handoff
-  line~~ **built 2026-11-11, with the unit tests of `STATUS_UNSUPPORTED` from version 1**; left: `AgainstEncriTest`
-  reading a handoff's name both ways, against an encri that has built D147. Clients ask for it by a tick on a share
-  or an *open with* (L25).
+  line~~ **built 2026-11-11, with the unit tests of `STATUS_UNSUPPORTED` from version 1**; ~~left: `AgainstEncriTest`
+  reading a handoff's name both ways, against an encri that has built D147~~. **Done 2026-11-12 (L24)**:
+  `AgainstEncriTest` read it both ways, 10 of 10 on the A20 and on Waydroid, against encri at encri-core `e632c7e`.
+  Clients ask for it by a tick on a share or an *open with* (L25).
 - **Publishing** (L1): Maven Central, with `com.systemhalted` verified by a DNS record on
   `systemhalted.com`; the signing of artifacts; and reproducible AARs checked as encri's release is
   (encri D116).

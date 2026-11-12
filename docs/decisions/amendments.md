@@ -6,6 +6,10 @@ Each entry corrects a record. Its bold lead names the record possessively ("L20'
 
 ## Amendments
 
+- **L24's *not run* was overtaken by its run (2026-11-12).** `AgainstEncriTest` read a handoff's name both ways
+  against encri at encri-core `e632c7e`, which has built encri D147: 10 of 10, none skipped, on the A20 (API 30) and on
+  Waydroid (API 33), its first run at API 33. With `withNames` ignored in `EncriSession.handOff`, step 7 failed on the
+  A20 with `expected:<[handed].txt> but was:<[47bfd8b3cf5c].txt>`. L24 marks it in place.
 - **L24's *nothing is built* was overtaken by its build (2026-11-11).** `handOffNamed`, `VERSION` 2 and the client's
   `withNames` landed in `a414543`, the day encri built D147. `AgainstEncriTest` reading a handoff's name both ways is
   written and has not run. L24 marks it in place.
