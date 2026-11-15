@@ -72,6 +72,9 @@ is level 1; full records are in `docs/decisions/`.
   Robolectric does not shadow it. (L12)
 - A connection test failed whenever the looper ran the disconnect first: the name it passes was declared non-null.
   Found by running the suite under load. (L13)
+- `isOpen` read only the client's own flag, so a session encri had said was over (`STATE_ENDED`) still said it was
+  open until a request was answered `STATUS_ENDED`. The listener records it now; requests still ask encri, so a wait
+  is answered by encri's reason, not by `DISCONNECTED` (2026-11-15).
 
 ## Measured, not assumed
 - A consumer that depends on the client alone cannot name `IEncriService.VERSION` (*Unresolved reference 'api'*);

@@ -69,8 +69,11 @@ public class EncriSession private constructor(
     /** What encri tells this session while it lasts: lock, unlock, the end, and folders that changed. */
     public val events: SharedFlow<VaultEvent> get() = listener.events
 
-    /** Whether the session can still be used. */
-    public val isOpen: Boolean get() = !ended.get()
+    /**
+     * Whether the session can still be used: not once it is closed, encri's process dies, or encri says
+     * it is over.
+     */
+    public val isOpen: Boolean get() = !ended.get() && !listener.toldEnded
 
     /** The grant as it is now, which is the same as [grant] unless encri's answer has changed. */
     public suspend fun refreshGrant(): EncriResult<EncriGrant> =

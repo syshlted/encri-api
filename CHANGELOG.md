@@ -4,6 +4,14 @@ What happened, newest first. Why is in `docs/decisions/`, and what is next is in
 
 ## Unreleased
 
+### A session encri ends says it is not open (2026-11-15)
+
+**Fixed.** `EncriSession.isOpen` went on saying true after encri said the session was over (`STATE_ENDED`, which a
+consent sends, L23), until a request was answered `STATUS_ENDED`. It says false from the moment encri says so.
+Requests are unchanged: they still ask encri, and one waiting on a listener still gets encri's answer. Found while
+encri-firefox fixed its spike, which trusted a session it held (encri-firefox W5). A new test failed at API 27 and 36
+before the fix; all 125 unit tests, ktlint, detekt and the coverage gates pass with it. No public signature changed.
+
 ### A handoff's name, read both ways against encri at API 30 and 33 (2026-11-12)
 
 **Completed (L24).** `AgainstEncriTest` ran against encri at encri-core `e632c7e`, which has built encri D147, from the

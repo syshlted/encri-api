@@ -18,6 +18,11 @@ internal class SessionListener : IVaultListener.Stub() {
 
     val events: SharedFlow<VaultEvent> get() = emitted
 
+    /** Whether encri has said the session is over. A request still asks encri, which answers `STATUS_ENDED` (L23). */
+    @Volatile
+    var toldEnded: Boolean = false
+        private set
+
     /** Ends the session's event stream from this side, when the session's binder died. */
     fun ended() {
         emitted.tryEmit(VaultEvent.Ended)
@@ -29,11 +34,16 @@ internal class SessionListener : IVaultListener.Stub() {
 
             IEncriService.STATE_UNLOCKED -> emitted.tryEmit(VaultEvent.Unlocked)
 
-            IEncriService.STATE_ENDED -> emitted.tryEmit(VaultEvent.Ended)
+            IEncriService.STATE_ENDED -> heardEnded()
 
             // A state a newer encri added: this client does not know what it means, so says nothing.
             else -> Unit
         }
+    }
+
+    private fun heardEnded() {
+        toldEnded = true
+        emitted.tryEmit(VaultEvent.Ended)
     }
 
     override fun onFolderChanged(folderId: String?) {

@@ -80,6 +80,18 @@ class EncriSessionTest {
         }
 
     @Test
+    fun `a session encri says is over is no longer open, and a lock does not end one`() =
+        runTest {
+            val listener = SessionListener()
+            val session =
+                EncriSession.open(fake, grant, listener, UnconfinedTestDispatcher(testScheduler), IEncriService.VERSION)
+            listener.onStateChanged(IEncriService.STATE_LOCKED)
+            assertTrue("a lock ended the session", session.isOpen)
+            listener.onStateChanged(IEncriService.STATE_ENDED)
+            assertFalse("encri said the session is over, and it still says it is open", session.isOpen)
+        }
+
+    @Test
     fun `an ended session says so, and asks encri nothing more`() =
         runTest {
             var asked = 0
