@@ -106,7 +106,10 @@ public data class RecognizedApp(
     val refusedVersions: Set<Long>,
 )
 
-/** What an app may do in the vault, as the contract's rights name them (encri-api L11). */
+/**
+ * What an app may do in the vault, as the contract's rights name them (encri-api L11), and [BACKUP], the
+ * backup app's session, which reads no document (encri-api L27).
+ */
 public enum class RecognizedRight(
     /** Its name in a registry file. */
     public val word: String,
@@ -116,6 +119,9 @@ public enum class RecognizedRight(
     CREATE("create"),
     DELETE("delete"),
     MOVE("move"),
+
+    /** Backing the vault up into a folder the app serves: no document right, and no grant (encri-api L27). */
+    BACKUP("backup"),
 }
 
 /** What encri says about an app, by what the registry holds for it. */

@@ -55,6 +55,14 @@ class RegistryTest {
     }
 
     @Test
+    fun `a backup app is reviewed for backup alone, with no document right and no read (L27)`() {
+        val app = RegistryFormat.parse(FILE, ENTRY.replace("read write create", "backup"))
+        assertEquals(setOf(RecognizedRight.BACKUP), app.rights)
+        val both = RegistryFormat.parse(FILE, ENTRY.replace("read write create", "read backup"))
+        assertEquals(setOf(RecognizedRight.READ, RecognizedRight.BACKUP), both.rights)
+    }
+
+    @Test
     fun `a certificate is read as apksigner prints it, or with colons and capitals`() {
         val colons = KEY.uppercase().chunked(2).joinToString(":")
         val app = RegistryFormat.parse(FILE, ENTRY.replace("certificate: $KEY", "certificate: $colons"))
@@ -126,7 +134,8 @@ class RegistryTest {
         assertRefused("is not an https address", ENTRY.replace("https://github.com", "http://github.com"))
         assertRefused("is not a SHA-256 in hex", ENTRY.replace(KEY, KEY.dropLast(1)))
         assertRefused("`erase` is not a right", ENTRY.replace("read write create", "read erase"))
-        assertRefused("every app is reviewed for `read`", ENTRY.replace("read write create", "write"))
+        assertRefused("is reviewed for `read`", ENTRY.replace("read write create", "write"))
+        assertRefused("is reviewed for `read`", ENTRY.replace("read write create", "backup write"))
         assertRefused(
             "`minimum-version` is not a version code",
             ENTRY.replace("minimum-version: 12", "minimum-version: 0"),

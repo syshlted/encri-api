@@ -61,6 +61,7 @@ records are in `docs/decisions/`.
 | | Why it matters here |
 |---|---|
 | L15 | The format, its strictness, the module, the snapshot; two veto flags |
+| L27 | `backup`, a right with no document, needs no `read` |
 | L22 | Encri Files listed; `FINGERPRINTS.md`; one veto flag (the developer's name) |
 | L16 | The registry's public API dump |
 | L10 | Its runtime classpath locked and scanned |

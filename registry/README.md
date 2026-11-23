@@ -32,7 +32,7 @@ refused-versions: 14, 15
 | `developer` | Who wrote it, as the consent screen will name them. |
 | `source` | Where its source is, an `https` address: what a reviewer read, and what a user can. |
 | `certificate` | The SHA-256 of its signing certificate, as `apksigner verify --print-certs` prints it. Once per key: a key rotated with both builds recognized is listed twice. |
-| `rights` | What it was reviewed for, from `read write create delete move`. Always `read`. Anything more an app asks for is called unreviewed. |
+| `rights` | What it was reviewed for, from `read write create delete move backup`. Always `read` with any of the first five; `backup` alone is the backup app's session, which reads no document (encri-api L27). Anything more an app asks for is called unreviewed. |
 | `minimum-version` | The lowest version code recognized. |
 | `refused-versions` | Optional: version codes encri refuses outright, for a build known to be bad. |
 

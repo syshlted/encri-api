@@ -57,6 +57,7 @@ public enum class com.systemhalted.encri.registry.RecognizedRight
   entry CREATE
   entry DELETE
   entry MOVE
+  entry BACKUP
   public fun valueOf(value: kotlin.String): com.systemhalted.encri.registry.RecognizedRight
   public fun values(): kotlin.Array<com.systemhalted.encri.registry.RecognizedRight>
   public val entries: kotlin.enums.EnumEntries<com.systemhalted.encri.registry.RecognizedRight>

@@ -83,7 +83,11 @@ internal object RegistryFormat {
                 RecognizedRight.entries.firstOrNull { it.word == word }
                     ?: fail("`$word` is not a right")
             }
-        if (RecognizedRight.READ !in rights) fail("every app is reviewed for `read`: every grant carries it")
+        // `backup` alone gives no document, so it needs no `read`; any document right comes with it (L27).
+        val documentRights = rights - RecognizedRight.BACKUP
+        if (documentRights.isNotEmpty() && RecognizedRight.READ !in rights) {
+            fail("an app reviewed for a document right is reviewed for `read`: every grant carries it")
+        }
 
         val minimum =
             one("minimum-version").toLongOrNull()?.takeIf { it > 0 } ?: fail("`minimum-version` is not a version code")
