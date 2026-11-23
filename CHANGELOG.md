@@ -20,6 +20,9 @@ which hands the folder only to a trusted encri, and `Failure.BUSY` and `TIMED_OU
 `backup`, which needs no `read`. 204 unit tests pass, with ktlint, detekt and the coverage gates; five guards were
 each reverted and failed the case written for them. Not run against encri, which has no side yet (encri D149).
 
+**Then `Encri.ACTION_VAULT_UNLOCKED`**, so that the backup app's receiver can name the broadcast without the
+contract, which the client hides (L5). encri's side was built the same day, at this repository's `d05979d`.
+
 ### A session encri ends says it is not open (2026-11-15)
 
 **Fixed.** `EncriSession.isOpen` went on saying true after encri said the session was over (`STATE_ENDED`, which a

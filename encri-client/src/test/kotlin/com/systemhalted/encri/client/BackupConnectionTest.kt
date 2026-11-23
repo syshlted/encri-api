@@ -109,6 +109,11 @@ class BackupConnectionTest {
         assertNull(Encri.backupSetUpResult(Activity.RESULT_OK, result(0)))
     }
 
+    @Test
+    fun `the unlock the backup app hears is the contract's`() {
+        assertEquals(IEncriService.ACTION_VAULT_UNLOCKED, Encri.ACTION_VAULT_UNLOCKED)
+    }
+
     private fun answer(code: Int) = BackupSessionResult().apply { status = code }
 
     private fun trustStranger() = EncriTrust.alsoTrusting(sha256Hex(STRANGER.toByteArray()))

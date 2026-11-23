@@ -26,6 +26,7 @@ internal object Contract {
     const val EXTRA_BACKUP_SET_UP: String = IEncriService.EXTRA_BACKUP_SET_UP
     const val BACKUP_CREATED: Int = IEncriService.BACKUP_CREATED
     const val BACKUP_RECONNECTED: Int = IEncriService.BACKUP_RECONNECTED
+    const val ACTION_VAULT_UNLOCKED: String = IEncriService.ACTION_VAULT_UNLOCKED
 
     /** The contract version that added the backup app's session (encri-api L27). */
     const val BACKUP_SESSIONS: Int = 3

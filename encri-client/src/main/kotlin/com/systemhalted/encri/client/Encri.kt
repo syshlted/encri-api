@@ -36,6 +36,13 @@ public object Encri {
     /** encri's package. Pinned here rather than looked up, so a lookalike cannot answer in its place. */
     public const val PACKAGE: String = Contract.PACKAGE
 
+    /**
+     * The broadcast encri sends the backup app's package at each unlock, while a backup is set up with it
+     * (encri-api L27), for the app's manifest to receive and its receiver to check. It carries nothing, and
+     * anyone can send it, so it is only ever a reason to ask encri, through [EncriConnection.openBackup].
+     */
+    public const val ACTION_VAULT_UNLOCKED: String = Contract.ACTION_VAULT_UNLOCKED
+
     /** Whether encri is installed here, and signed by a key [trust] accepts. */
     public fun availability(
         context: Context,
