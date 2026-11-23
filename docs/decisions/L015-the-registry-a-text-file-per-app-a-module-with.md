@@ -10,7 +10,7 @@ and what a reviewer checks.
 **Strict, because a mistake is a label on a stranger's app.** An unknown key is an error rather than ignored, so a
 misspelt `refused-versions` cannot refuse nothing; every key but `certificate` appears once; the file is named after
 its package, so a pull request cannot list one app under another's name; a certificate is 64 hex digits, read with or
-without `apksigner`'s colons; `rights` is from the contract's five and always includes `read`; version codes are
+without `apksigner`'s colons; `rights` is from the contract's five and always includes `read` (*amended by L27, 2026-11-23:* or is `backup` alone); version codes are
 positive. A registry that lists a package twice is refused whole.
 
 **`encri-registry`, the pure-JVM module L1 foresaw**, with no dependency but the standard library. *Rejected:* TOML or
@@ -45,6 +45,8 @@ manager signed alike, and an entry per app is what lets one be refused without t
 
 ## Amended since, as recorded in `amendments.md`
 
+- **L15's `rights`, which always include `read`, are amended by L27 (2026-11-23)**: an entry may list `backup` alone,
+  the right a backup app is reviewed for. An entry that lists any document right still lists `read`.
 - **L12 and L15's empty lists are filled by L22 (2026-10-28).** `EncriTrust.RELEASE_CERTIFICATES` holds encri's app
   signing certificate, `BA:30:D5:EE…4C:CC:49`, so an app trusts a released encri by default and not only one signed by
   its own key; and the registry lists Encri Files under that certificate.

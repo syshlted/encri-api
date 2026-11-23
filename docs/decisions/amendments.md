@@ -6,6 +6,14 @@ Each entry corrects a record. Its bold lead names the record possessively ("L20'
 
 ## Amendments
 
+- **L11's locked vault, which refused every app, is amended by L27 (2026-11-23)**: the backup app's session,
+  `openBackup`, opens while the vault is locked. It is recognized from a record kept outside the vault's seal, and it
+  reads no document, so a locked vault still hands no app anything a document holds.
+- **L15's `rights`, which always include `read`, are amended by L27 (2026-11-23)**: an entry may list `backup` alone,
+  the right a backup app is reviewed for. An entry that lists any document right still lists `read`.
+- **L21's backup surface, undesigned, is designed by L27 (2026-11-23)**: one backup app, not two, which serves its
+  folder to encri as a binder, and three actions and a broadcast of its own. `ACTION_BACKUPS` stays removed.
+
 - **L24's *not run* was overtaken by its run (2026-11-12).** `AgainstEncriTest` read a handoff's name both ways
   against encri at encri-core `e632c7e`, which has built encri D147: 10 of 10, none skipped, on the A20 (API 30) and on
   Waydroid (API 33), its first run at API 33. With `withNames` ignored in `EncriSession.handOff`, step 7 failed on the

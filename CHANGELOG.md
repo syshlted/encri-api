@@ -4,6 +4,13 @@ What happened, newest first. Why is in `docs/decisions/`, and what is next is in
 
 ## Unreleased
 
+### The backup app's surface is designed (2026-11-23)
+
+**L27**, flagged for veto: Encri Backup serves its folder to encri as a binder of its own, the five operations a
+backup store has, and encri backs up into it as it does now, locked or not. Contract version 3 adds `openBackup`,
+the backup session, the folder and the run's listener, a set-up screen started with the folder's binder, an unlock
+broadcast to the backup app alone, and the registry's `backup` right. L11, L15 and L21 are amended. Nothing is built.
+
 ### A session encri ends says it is not open (2026-11-15)
 
 **Fixed.** `EncriSession.isOpen` went on saying true after encri said the session was over (`STATE_ENDED`, which a

@@ -62,7 +62,8 @@ item 3~~ **was built 2026-10-23 as encri D120**.
    it, are in encri-backup's `encri-boundary` brief (`../encri-backup/.claude/rules/encri-boundary.md`) and its
    roadmap's item 1: a backup right that works while the vault is locked, the folder's contents going into encri, and
    blob streams coming out. It is designed here, as a decision record, with encri's half in encri's. Its registry entry
-   (L15) waits on its signing key, which is open in K1. Undesigned.
+   (L15) waits on its signing key. ~~Undesigned.~~ **Designed 2026-11-23 (L27)**, flagged for veto: the app serves
+   its folder to encri as a binder, and encri backs up into it, locked or not. Contract version 3. Unbuilt.
 
 ## Before the first release
 
