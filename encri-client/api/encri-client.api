@@ -15,6 +15,132 @@ public data object com.systemhalted.encri.client.Availability.Ready : com.system
   public fun equals(other: kotlin.Any?): kotlin.Boolean
   public fun hashCode(): kotlin.Int
   public fun toString(): kotlin.String
+public data class com.systemhalted.encri.client.BackupFile
+  constructor(name: kotlin.String, length: kotlin.Long, modifiedMillis: kotlin.Long?)
+  public fun component1(): kotlin.String
+  public fun component2(): kotlin.Long
+  public fun component3(): kotlin.Long?
+  public fun copy(name: kotlin.String = …, length: kotlin.Long = …, modifiedMillis: kotlin.Long? = …): com.systemhalted.encri.client.BackupFile
+  public fun equals(other: kotlin.Any?): kotlin.Boolean
+  public fun hashCode(): kotlin.Int
+  public fun toString(): kotlin.String
+  public val length: kotlin.Long
+  public val modifiedMillis: kotlin.Long?
+  public val name: kotlin.String
+public interface com.systemhalted.encri.client.BackupFolder
+  public fun delete(name: kotlin.String): kotlin.Boolean
+  public fun list(): kotlin.collections.List<com.systemhalted.encri.client.BackupFile>
+  public fun openRead(name: kotlin.String): android.os.ParcelFileDescriptor
+  public fun openWrite(name: kotlin.String): android.os.ParcelFileDescriptor
+public class com.systemhalted.encri.client.BackupNameTakenException : java.io.IOException
+  constructor(message: kotlin.String)
+public sealed interface com.systemhalted.encri.client.BackupOutcome
+public data object com.systemhalted.encri.client.BackupOutcome.AccessOff : com.systemhalted.encri.client.BackupOutcome
+  public fun equals(other: kotlin.Any?): kotlin.Boolean
+  public fun hashCode(): kotlin.Int
+  public fun toString(): kotlin.String
+public data class com.systemhalted.encri.client.BackupOutcome.Failed : com.systemhalted.encri.client.BackupOutcome
+  constructor(failure: com.systemhalted.encri.client.Failure, message: kotlin.String?)
+  public fun component1(): com.systemhalted.encri.client.Failure
+  public fun component2(): kotlin.String?
+  public fun copy(failure: com.systemhalted.encri.client.Failure = …, message: kotlin.String? = …): com.systemhalted.encri.client.BackupOutcome.Failed
+  public fun equals(other: kotlin.Any?): kotlin.Boolean
+  public fun hashCode(): kotlin.Int
+  public fun toString(): kotlin.String
+  public val failure: com.systemhalted.encri.client.Failure
+  public val message: kotlin.String?
+public data object com.systemhalted.encri.client.BackupOutcome.NotSetUp : com.systemhalted.encri.client.BackupOutcome
+  public fun equals(other: kotlin.Any?): kotlin.Boolean
+  public fun hashCode(): kotlin.Int
+  public fun toString(): kotlin.String
+public data class com.systemhalted.encri.client.BackupOutcome.Opened : com.systemhalted.encri.client.BackupOutcome
+  constructor(backup: com.systemhalted.encri.client.EncriBackup)
+  public fun component1(): com.systemhalted.encri.client.EncriBackup
+  public fun copy(backup: com.systemhalted.encri.client.EncriBackup = …): com.systemhalted.encri.client.BackupOutcome.Opened
+  public fun equals(other: kotlin.Any?): kotlin.Boolean
+  public fun hashCode(): kotlin.Int
+  public fun toString(): kotlin.String
+  public val backup: com.systemhalted.encri.client.EncriBackup
+public data class com.systemhalted.encri.client.BackupOutcome.TooOld : com.systemhalted.encri.client.BackupOutcome
+  constructor(serviceVersion: kotlin.Int)
+  public fun component1(): kotlin.Int
+  public fun copy(serviceVersion: kotlin.Int = …): com.systemhalted.encri.client.BackupOutcome.TooOld
+  public fun equals(other: kotlin.Any?): kotlin.Boolean
+  public fun hashCode(): kotlin.Int
+  public fun toString(): kotlin.String
+  public val serviceVersion: kotlin.Int
+public data class com.systemhalted.encri.client.BackupProgress
+  constructor(phase: com.systemhalted.encri.client.BackupProgress.Phase, done: kotlin.Long, total: kotlin.Long?)
+  public fun component1(): com.systemhalted.encri.client.BackupProgress.Phase
+  public fun component2(): kotlin.Long
+  public fun component3(): kotlin.Long?
+  public fun copy(phase: com.systemhalted.encri.client.BackupProgress.Phase = …, done: kotlin.Long = …, total: kotlin.Long? = …): com.systemhalted.encri.client.BackupProgress
+  public fun equals(other: kotlin.Any?): kotlin.Boolean
+  public fun hashCode(): kotlin.Int
+  public fun toString(): kotlin.String
+  public val done: kotlin.Long
+  public val phase: com.systemhalted.encri.client.BackupProgress.Phase
+  public val total: kotlin.Long?
+public enum class com.systemhalted.encri.client.BackupProgress.Phase
+  entry PREPARING
+  entry COPYING
+  public fun valueOf(value: kotlin.String): com.systemhalted.encri.client.BackupProgress.Phase
+  public fun values(): kotlin.Array<com.systemhalted.encri.client.BackupProgress.Phase>
+  public val entries: kotlin.enums.EnumEntries<com.systemhalted.encri.client.BackupProgress.Phase>
+public data class com.systemhalted.encri.client.BackupRun
+  constructor(outcome: com.systemhalted.encri.client.BackupRun.Outcome, generation: kotlin.Long?, documentCount: kotlin.Int?, contentBytes: kotlin.Long?, documentsCopied: kotlin.Int, bytesCopied: kotlin.Long, generationsPruned: kotlin.Int, asOfMillis: kotlin.Long?, vaultHasDataLoss: kotlin.Boolean)
+  public fun component1(): com.systemhalted.encri.client.BackupRun.Outcome
+  public fun component2(): kotlin.Long?
+  public fun component3(): kotlin.Int?
+  public fun component4(): kotlin.Long?
+  public fun component5(): kotlin.Int
+  public fun component6(): kotlin.Long
+  public fun component7(): kotlin.Int
+  public fun component8(): kotlin.Long?
+  public fun component9(): kotlin.Boolean
+  public fun copy(outcome: com.systemhalted.encri.client.BackupRun.Outcome = …, generation: kotlin.Long? = …, documentCount: kotlin.Int? = …, contentBytes: kotlin.Long? = …, documentsCopied: kotlin.Int = …, bytesCopied: kotlin.Long = …, generationsPruned: kotlin.Int = …, asOfMillis: kotlin.Long? = …, vaultHasDataLoss: kotlin.Boolean = …): com.systemhalted.encri.client.BackupRun
+  public fun equals(other: kotlin.Any?): kotlin.Boolean
+  public fun hashCode(): kotlin.Int
+  public fun toString(): kotlin.String
+  public val asOfMillis: kotlin.Long?
+  public val bytesCopied: kotlin.Long
+  public val contentBytes: kotlin.Long?
+  public val documentCount: kotlin.Int?
+  public val documentsCopied: kotlin.Int
+  public val generation: kotlin.Long?
+  public val generationsPruned: kotlin.Int
+  public val outcome: com.systemhalted.encri.client.BackupRun.Outcome
+  public val vaultHasDataLoss: kotlin.Boolean
+public enum class com.systemhalted.encri.client.BackupRun.Outcome
+  entry WRITTEN
+  entry UNCHANGED
+  entry LANDED
+  entry STOPPED
+  entry WRONG_FOLDER
+  entry VAULT_CHANGED
+  entry VAULT_INCONSISTENT
+  entry SETTINGS_UNREADABLE
+  public fun valueOf(value: kotlin.String): com.systemhalted.encri.client.BackupRun.Outcome
+  public fun values(): kotlin.Array<com.systemhalted.encri.client.BackupRun.Outcome>
+  public val entries: kotlin.enums.EnumEntries<com.systemhalted.encri.client.BackupRun.Outcome>
+public enum class com.systemhalted.encri.client.BackupSetUp
+  entry CREATED
+  entry RECONNECTED
+  public fun valueOf(value: kotlin.String): com.systemhalted.encri.client.BackupSetUp
+  public fun values(): kotlin.Array<com.systemhalted.encri.client.BackupSetUp>
+  public val entries: kotlin.enums.EnumEntries<com.systemhalted.encri.client.BackupSetUp>
+public data class com.systemhalted.encri.client.BackupState
+  constructor(isSetUp: kotlin.Boolean, isLocked: kotlin.Boolean, hasRunWaiting: kotlin.Boolean)
+  public fun component1(): kotlin.Boolean
+  public fun component2(): kotlin.Boolean
+  public fun component3(): kotlin.Boolean
+  public fun copy(isSetUp: kotlin.Boolean = …, isLocked: kotlin.Boolean = …, hasRunWaiting: kotlin.Boolean = …): com.systemhalted.encri.client.BackupState
+  public fun equals(other: kotlin.Any?): kotlin.Boolean
+  public fun hashCode(): kotlin.Int
+  public fun toString(): kotlin.String
+  public val hasRunWaiting: kotlin.Boolean
+  public val isLocked: kotlin.Boolean
+  public val isSetUp: kotlin.Boolean
 public sealed interface com.systemhalted.encri.client.ConnectResult
 public data class com.systemhalted.encri.client.ConnectResult.Connected : com.systemhalted.encri.client.ConnectResult
   constructor(connection: com.systemhalted.encri.client.EncriConnection)
@@ -56,13 +182,26 @@ public object com.systemhalted.encri.client.Encri
   public fun authorizationIntent(rights: kotlin.collections.Set<com.systemhalted.encri.client.Right>): android.content.Intent
   public fun authorizationResult(resultCode: kotlin.Int, data: android.content.Intent?): kotlin.collections.Set<com.systemhalted.encri.client.Right>?
   public fun availability(context: android.content.Context, trust: com.systemhalted.encri.client.EncriTrust = …): com.systemhalted.encri.client.Availability
+  public fun backupSetUpResult(resultCode: kotlin.Int, data: android.content.Intent?): com.systemhalted.encri.client.BackupSetUp?
   public fun restoreIntent(): android.content.Intent
   public fun saveBackupFileIntent(): android.content.Intent
+  public fun setUpBackupIntent(context: android.content.Context, folder: com.systemhalted.encri.client.BackupFolder, authority: kotlin.String, trust: com.systemhalted.encri.client.EncriTrust = …): android.content.Intent?
   public fun unlockIntent(): android.content.Intent
   public suspend fun connect(context: android.content.Context, trust: com.systemhalted.encri.client.EncriTrust = …): com.systemhalted.encri.client.ConnectResult
   public val PACKAGE: kotlin.String
+public class com.systemhalted.encri.client.EncriBackup : kotlin.AutoCloseable /* = java.lang.AutoCloseable */
+  public fun close(): kotlin.Unit
+  public fun stop(): kotlin.Unit
+  public suspend fun run(folder: com.systemhalted.encri.client.BackupFolder, keep: kotlin.Int = …, onProgress: (com.systemhalted.encri.client.BackupProgress) -> kotlin.Unit = …): com.systemhalted.encri.client.EncriResult<com.systemhalted.encri.client.BackupRun>
+  public suspend fun state(): com.systemhalted.encri.client.EncriResult<com.systemhalted.encri.client.BackupState>
+  public suspend fun stopBackups(): com.systemhalted.encri.client.EncriResult<kotlin.Unit>
+  public val isOpen: kotlin.Boolean
+public companion object com.systemhalted.encri.client.EncriBackup.Companion
+  public val DEFAULT_KEEP: kotlin.Int
+  public val MAX_KEEP: kotlin.Int
 public class com.systemhalted.encri.client.EncriConnection : kotlin.AutoCloseable /* = java.lang.AutoCloseable */
   public fun close(): kotlin.Unit
+  public suspend fun openBackup(): com.systemhalted.encri.client.BackupOutcome
   public suspend fun openSession(): com.systemhalted.encri.client.SessionOutcome
   public val contractVersion: kotlin.Int
   public val isConnected: kotlin.Boolean
@@ -174,6 +313,8 @@ public enum class com.systemhalted.encri.client.Failure
   entry ENDED
   entry CANCELLED
   entry DISCONNECTED
+  entry BUSY
+  entry TIMED_OUT
   public fun valueOf(value: kotlin.String): com.systemhalted.encri.client.Failure
   public fun values(): kotlin.Array<com.systemhalted.encri.client.Failure>
   public val entries: kotlin.enums.EnumEntries<com.systemhalted.encri.client.Failure>

@@ -38,6 +38,7 @@ class ContractMappingTest {
                 IEncriService.STATUS_FAILED to Failure.FAILED,
                 IEncriService.STATUS_ENDED to Failure.ENDED,
                 IEncriService.STATUS_CANCELLED to Failure.CANCELLED,
+                IEncriService.STATUS_BUSY to Failure.BUSY,
             )
         named.forEach { (status, failure) -> assertEquals(failure, failureOf(status)) }
         // A status a newer encri added, and the 0 an older one answers (L2).

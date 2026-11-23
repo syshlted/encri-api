@@ -9,7 +9,16 @@ What happened, newest first. Why is in `docs/decisions/`, and what is next is in
 **L27**, flagged for veto: Encri Backup serves its folder to encri as a binder of its own, the five operations a
 backup store has, and encri backs up into it as it does now, locked or not. Contract version 3 adds `openBackup`,
 the backup session, the folder and the run's listener, a set-up screen started with the folder's binder, an unlock
-broadcast to the backup app alone, and the registry's `backup` right. L11, L15 and L21 are amended. Nothing is built.
+broadcast to the backup app alone, and the registry's `backup` right. L11, L15 and L21 are amended.
+
+**Built the same day.** Version 3 of the wire: `openBackup`, `IEncriBackup`, `IBackupFolder`, `IBackupListener`
+and four parcelables, with `STATUS_BUSY`, the `RUN_` outcomes and the set-up screen's names. In the client,
+`EncriConnection.openBackup`, `EncriBackup` (a run that answers at once and ends on the listener, given up after
+two minutes of silence, stopped when its caller is cancelled), the `BackupFolder` an app implements, which the
+client pages, filters to the backup's own names and answers only to encri's uid, `Encri.setUpBackupIntent`,
+which hands the folder only to a trusted encri, and `Failure.BUSY` and `TIMED_OUT`. In the registry,
+`backup`, which needs no `read`. 204 unit tests pass, with ktlint, detekt and the coverage gates; five guards were
+each reverted and failed the case written for them. Not run against encri, which has no side yet (encri D149).
 
 ### A session encri ends says it is not open (2026-11-15)
 

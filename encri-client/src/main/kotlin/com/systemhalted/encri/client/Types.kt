@@ -112,6 +112,12 @@ public enum class Failure {
 
     /** encri's process went away mid-call, or the connection was closed. Connect again. */
     DISCONNECTED,
+
+    /** Something of the kind is already going, such as a backup run. Ask again when it ends. */
+    BUSY,
+
+    /** encri said nothing for longer than the request allows, and the client gave it up. */
+    TIMED_OUT,
 }
 
 /** The answer to one request: what it produced, or why it did not happen. */

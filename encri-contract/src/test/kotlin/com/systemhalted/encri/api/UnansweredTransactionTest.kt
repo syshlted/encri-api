@@ -31,6 +31,8 @@ class UnansweredTransactionTest {
                 override fun contractVersion(): Int = IEncriService.VERSION
 
                 override fun openSession(listener: IVaultListener?): SessionResult? = null
+
+                override fun openBackup(listener: IBackupListener?): BackupSessionResult? = null
             }
         assertEquals(IEncriService.VERSION, proxyOver(Remote(encri)).contractVersion())
     }
@@ -45,6 +47,12 @@ class UnansweredTransactionTest {
         // A parcelable result reads as null from an empty reply, which is why every result carries a
         // status that is never 0 and a client treats null as "not answered" rather than as a refusal.
         assertNull(proxyOver(Remote(null)).openSession(null))
+    }
+
+    @Test
+    fun `a backup session asked of an encri before version 3 reads as no answer`() {
+        // What a client that skipped the version check would see, and why it must not skip it (L27).
+        assertNull(proxyOver(Remote(null)).openBackup(null))
     }
 
     private fun proxyOver(binder: Binder): IEncriService = IEncriService.Stub.asInterface(binder)

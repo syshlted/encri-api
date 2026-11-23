@@ -94,6 +94,53 @@ class ParcelableEvolutionTest {
         }
     }
 
+    @Test
+    fun `a backup run's result survives the wire, and its unknowns read as -1`() {
+        val sent =
+            BackupRunResult().apply {
+                status = IEncriService.STATUS_OK
+                outcome = IEncriService.RUN_WRITTEN
+                generation = 7
+                documents = 12
+                contentBytes = 4_096
+                documentsCopied = 2
+                bytesCopied = 1_024
+                generationsPruned = 1
+                asOfUtcMillis = 3_000
+                dataLoss = true
+            }
+        val received = roundTrip(sent) { BackupRunResult.CREATOR.createFromParcel(it) }
+        assertEquals(IEncriService.RUN_WRITTEN, received.outcome)
+        assertEquals(7L, received.generation)
+        assertEquals(12, received.documents)
+        assertEquals(1_024L, received.bytesCopied)
+        assertEquals(3_000L, received.asOfUtcMillis)
+        assertEquals(true, received.dataLoss)
+
+        val unknown = BackupRunResult()
+        assertEquals(-1L, unknown.generation)
+        assertEquals(-1, unknown.documents)
+        assertEquals(-1L, unknown.contentBytes)
+        assertEquals(-1L, unknown.asOfUtcMillis)
+    }
+
+    @Test
+    fun `a folder's page survives the wire with its three lists in step`() {
+        val sent =
+            FolderPage().apply {
+                status = IEncriService.STATUS_OK
+                names = arrayOf("encri-backup.keys", "encri-blob-a.encri")
+                lengths = longArrayOf(8_192, 12_288)
+                modifiedUtcMillis = longArrayOf(-1, 5_000)
+                next = "encri-blob-a.encri"
+            }
+        val received = roundTrip(sent) { FolderPage.CREATOR.createFromParcel(it) }
+        assertEquals(sent.names!!.toList(), received.names!!.toList())
+        assertEquals(sent.lengths!!.toList(), received.lengths!!.toList())
+        assertEquals(sent.modifiedUtcMillis!!.toList(), received.modifiedUtcMillis!!.toList())
+        assertEquals("encri-blob-a.encri", received.next)
+    }
+
     private fun <T : android.os.Parcelable> roundTrip(
         sent: T,
         read: (Parcel) -> T,

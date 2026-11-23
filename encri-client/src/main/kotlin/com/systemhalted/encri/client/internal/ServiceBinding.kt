@@ -135,7 +135,7 @@ internal class ServiceBinding internal constructor(
                 }
 
                 else -> {
-                    ConnectResult.Connected(EncriConnection(binding, version, io))
+                    ConnectResult.Connected(EncriConnection(binding, version, io, uidOf(context, expectedPackage)))
                 }
             }
         }

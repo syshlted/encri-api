@@ -17,6 +17,9 @@ class WireNamesTest {
         assertEquals("com.systemhalted.encri.api.IVaultListener", IVaultListener.DESCRIPTOR)
         assertEquals("com.systemhalted.encri.api.IWriteListener", IWriteListener.DESCRIPTOR)
         assertEquals("com.systemhalted.encri.api.IThumbnailListener", IThumbnailListener.DESCRIPTOR)
+        assertEquals("com.systemhalted.encri.api.IEncriBackup", IEncriBackup.DESCRIPTOR)
+        assertEquals("com.systemhalted.encri.api.IBackupFolder", IBackupFolder.DESCRIPTOR)
+        assertEquals("com.systemhalted.encri.api.IBackupListener", IBackupListener.DESCRIPTOR)
     }
 
     @Test
@@ -27,7 +30,7 @@ class WireNamesTest {
     @Test
     fun `the service's methods are where they were`() {
         assertEquals(
-            listOf("contractVersion", "openSession"),
+            listOf("contractVersion", "openSession", "openBackup"),
             positions(IEncriService.Stub::class.java),
         )
     }
@@ -65,11 +68,24 @@ class WireNamesTest {
         assertEquals(listOf("onStateChanged", "onFolderChanged"), positions(IVaultListener.Stub::class.java))
         assertEquals(listOf("onWriteFinished"), positions(IWriteListener.Stub::class.java))
         assertEquals(listOf("onThumbnail"), positions(IThumbnailListener.Stub::class.java))
+        assertEquals(listOf("onRunProgress", "onRunFinished"), positions(IBackupListener.Stub::class.java))
     }
 
     @Test
-    fun `this is the second version of the contract`() {
-        assertEquals(2, IEncriService.VERSION)
+    fun `the backup session's and the folder's methods are where they were`() {
+        assertEquals(
+            listOf("state", "run", "stop", "stopBackups", "end"),
+            positions(IEncriBackup.Stub::class.java),
+        )
+        assertEquals(
+            listOf("list", "openRead", "openWrite", "delete"),
+            positions(IBackupFolder.Stub::class.java),
+        )
+    }
+
+    @Test
+    fun `this is the third version of the contract`() {
+        assertEquals(3, IEncriService.VERSION)
     }
 
     @Test
@@ -82,6 +98,33 @@ class WireNamesTest {
         assertEquals("com.systemhalted.encri.api.action.SAVE_BACKUP_FILE", IEncriService.ACTION_SAVE_BACKUP_FILE)
         assertEquals("com.systemhalted.encri.api.action.RESTORE", IEncriService.ACTION_RESTORE)
         assertEquals("vnd.android.document/directory", IEncriService.MIME_TYPE_FOLDER)
+    }
+
+    @Test
+    fun `how the backup app is asked and told`() {
+        assertEquals("com.systemhalted.encri.api.action.SET_UP_BACKUP", IEncriService.ACTION_SET_UP_BACKUP)
+        assertEquals("com.systemhalted.encri.api.extra.BACKUP_FOLDER", IEncriService.EXTRA_BACKUP_FOLDER)
+        assertEquals(
+            "com.systemhalted.encri.api.extra.BACKUP_FOLDER_AUTHORITY",
+            IEncriService.EXTRA_BACKUP_FOLDER_AUTHORITY,
+        )
+        assertEquals("com.systemhalted.encri.api.extra.BACKUP_SET_UP", IEncriService.EXTRA_BACKUP_SET_UP)
+        assertEquals("com.systemhalted.encri.api.action.VAULT_UNLOCKED", IEncriService.ACTION_VAULT_UNLOCKED)
+        assertEquals(listOf(1, 2), listOf(IEncriService.BACKUP_CREATED, IEncriService.BACKUP_RECONNECTED))
+        assertEquals(
+            (1..8).toList(),
+            listOf(
+                IEncriService.RUN_WRITTEN,
+                IEncriService.RUN_UNCHANGED,
+                IEncriService.RUN_LANDED,
+                IEncriService.RUN_STOPPED,
+                IEncriService.RUN_WRONG_FOLDER,
+                IEncriService.RUN_VAULT_CHANGED,
+                IEncriService.RUN_VAULT_INCONSISTENT,
+                IEncriService.RUN_SETTINGS_UNREADABLE,
+            ),
+        )
+        assertEquals(listOf(1, 2), listOf(IEncriService.PHASE_PREPARING, IEncriService.PHASE_COPYING))
     }
 
     @Test
@@ -113,8 +156,9 @@ class WireNamesTest {
                 IEncriService.STATUS_FAILED,
                 IEncriService.STATUS_ENDED,
                 IEncriService.STATUS_CANCELLED,
+                IEncriService.STATUS_BUSY,
             )
-        assertEquals((1..12).toList(), statuses)
+        assertEquals((1..13).toList(), statuses)
         assertEquals(
             listOf(1, 2, 3),
             listOf(IEncriService.STATE_LOCKED, IEncriService.STATE_UNLOCKED, IEncriService.STATE_ENDED),

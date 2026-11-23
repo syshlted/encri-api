@@ -34,7 +34,10 @@ its D149, and the app's is encri-backup's K4.
 
 ## Traps already paid for
 
-None yet.
+- **A run's end can arrive before `run`'s answer**, because the listener is oneway. The client starts listening
+  before it asks; a case fails with the order reversed.
+- **A set-up Intent sent to a lookalike would hand it the folder.** `Encri.setUpBackupIntent` answers null unless
+  encri is installed and trusted, and the folder's stub answers encri's uid alone.
 
 ## Measured, not assumed
 

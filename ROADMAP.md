@@ -63,7 +63,8 @@ item 3~~ **was built 2026-10-23 as encri D120**.
    roadmap's item 1: a backup right that works while the vault is locked, the folder's contents going into encri, and
    blob streams coming out. It is designed here, as a decision record, with encri's half in encri's. Its registry entry
    (L15) waits on its signing key. ~~Undesigned.~~ **Designed 2026-11-23 (L27)**, flagged for veto: the app serves
-   its folder to encri as a binder, and encri backs up into it, locked or not. Contract version 3. Unbuilt.
+   its folder to encri as a binder, and encri backs up into it, locked or not. Contract version 3. **Built here
+   2026-11-23**: the wire, `EncriBackup` and `BackupFolder`, and the registry's `backup` right. encri's side is next.
 
 ## Before the first release
 

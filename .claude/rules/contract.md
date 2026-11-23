@@ -100,6 +100,7 @@ encri's service follows them (encri D115). This brief is level 1; full records a
 | | Why it matters here |
 |---|---|
 | L2 | Names and positions are permanent; transaction 1; the version; unanswered methods read as zero |
+| L27 | Version 3: the backup app's session and folder, in the `backup` brief |
 | L11 | Contract v1: sessions, statuses, rights, pipes, listeners, paging; three veto flags |
 | L18 | The append-only check; no consumer R8 rules |
 | L19 | Every wire name says encri, permanent from the first tag; one veto flag |

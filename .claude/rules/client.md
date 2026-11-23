@@ -96,6 +96,7 @@ is level 1; full records are in `docs/decisions/`.
 | L23 | What the user allows replaces the grant: ask for every right |
 | L24, L25 | `handOff(withNames)`, refused below version 2; asked on the user's tick |
 | L20, L21 | The Intents for encri's backup screens; `backupsIntent()` gone |
+| L27 | `EncriBackup`, `BackupFolder` and the set-up Intent: the `backup` brief |
 | L11 | Bind by action; writes over a pipe; listeners |
 | L2 | Never call above the version; version 0 is not encri |
 | L13 | The seam for the device tests; null names |

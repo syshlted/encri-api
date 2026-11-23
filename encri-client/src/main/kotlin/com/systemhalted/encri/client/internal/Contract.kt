@@ -1,5 +1,7 @@
 package com.systemhalted.encri.client.internal
 
+import android.content.Context
+import android.content.pm.PackageManager
 import com.systemhalted.encri.api.Entry
 import com.systemhalted.encri.api.IEncriService
 import com.systemhalted.encri.client.EncriDocument
@@ -18,6 +20,18 @@ internal object Contract {
     const val ACTION_SAVE_BACKUP_FILE: String = IEncriService.ACTION_SAVE_BACKUP_FILE
     const val ACTION_RESTORE: String = IEncriService.ACTION_RESTORE
     const val EXTRA_RIGHTS: String = IEncriService.EXTRA_RIGHTS
+    const val ACTION_SET_UP_BACKUP: String = IEncriService.ACTION_SET_UP_BACKUP
+    const val EXTRA_BACKUP_FOLDER: String = IEncriService.EXTRA_BACKUP_FOLDER
+    const val EXTRA_BACKUP_FOLDER_AUTHORITY: String = IEncriService.EXTRA_BACKUP_FOLDER_AUTHORITY
+    const val EXTRA_BACKUP_SET_UP: String = IEncriService.EXTRA_BACKUP_SET_UP
+    const val BACKUP_CREATED: Int = IEncriService.BACKUP_CREATED
+    const val BACKUP_RECONNECTED: Int = IEncriService.BACKUP_RECONNECTED
+
+    /** The contract version that added the backup app's session (encri-api L27). */
+    const val BACKUP_SESSIONS: Int = 3
+
+    /** No app's uid: what a package that is not installed has. */
+    const val NO_UID: Int = -1
 
     /** The oldest contract this client can work with. Every method it calls is in version 1 (L11). */
     const val OLDEST_SERVICE: Int = 1
@@ -50,7 +64,20 @@ internal fun failureOf(status: Int): Failure =
         IEncriService.STATUS_UNSUPPORTED -> Failure.UNSUPPORTED
         IEncriService.STATUS_ENDED -> Failure.ENDED
         IEncriService.STATUS_CANCELLED -> Failure.CANCELLED
+        IEncriService.STATUS_BUSY -> Failure.BUSY
         else -> Failure.FAILED
+    }
+
+/** The uid [packageName] runs as, or [Contract.NO_UID] when it is not installed or not visible. */
+@Suppress("SwallowedException") // A package that is not there has no uid; that is the answer.
+internal fun uidOf(
+    context: Context,
+    packageName: String,
+): Int =
+    try {
+        context.packageManager.getPackageUid(packageName, 0)
+    } catch (missing: PackageManager.NameNotFoundException) {
+        Contract.NO_UID
     }
 
 internal fun documentOf(entry: Entry): EncriDocument =

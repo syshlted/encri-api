@@ -148,3 +148,55 @@ All three are `oneway`: encri never waits for a client to answer.
   session is over. Ignore a state you do not know.
 - `IVaultListener.onFolderChanged(folderId)` — best effort, as SAF's notifications are.
 - `IWriteListener.onWriteFinished(result)` and `IThumbnailListener.onThumbnail(requestId, result)`.
+
+## The backup app (version 3)
+
+One app backs a vault up: the one the user set backups up with (L27). It holds the backup folder's grant and
+no key, and serves the folder to encri, which runs each backup into it. A companion has no use for any of
+this; nothing here reads a document.
+
+### Setting up
+
+Start `com.systemhalted.encri.api.action.SET_UP_BACKUP` with `startActivityForResult` and encri's package,
+carrying the folder as `EXTRA_BACKUP_FOLDER`, an `IBackupFolder`'s binder put in the extras' `Bundle`, and the
+folder's provider authority as `EXTRA_BACKUP_FOLDER_AUTHORITY`. Check that encri is trusted first: the Intent
+hands it the folder. encri asks for the unlock and the passphrase on its own screen, names the app from the
+system, and refuses a folder in its own provider. It answers `RESULT_OK` with `EXTRA_BACKUP_SET_UP`,
+`BACKUP_CREATED` or `BACKUP_RECONNECTED`, or `RESULT_CANCELED` having set nothing up. Setting up replaces any
+backup the vault had, and the app it had it with.
+
+### The session
+
+`openBackup(listener)` answers, in this order, `STATUS_ACCESS_OFF`, `STATUS_INVALID` for no listener,
+`STATUS_NOT_AUTHORIZED` for any app but the one backups were set up with, or `STATUS_OK` with an
+`IEncriBackup`. **It opens while the vault is locked.** Never call it below version 3.
+
+- **`state()`** — whether a backup is set up, whether the vault is locked, and whether a stopped run waits.
+- **`run(folder, keep)`** — backs up into `folder` now, keeping `keep` generations, 1 to 1,000. Unlocked, a
+  whole run; locked, the rest of a run that stopped part way, or `STATUS_LOCKED` when none waits. It answers
+  `STATUS_OK` as the run starts, `STATUS_BUSY` while another goes, and the run's end comes once on the
+  listener's `onRunFinished`, with `onRunProgress` at least every 30 seconds until then.
+- **`stop()`** — the run that is going stops between copies, keeping what it copied for the next.
+- **`stopBackups()`** — encri forgets the backup and the app. Nothing in the folder is touched.
+- **`end()`**, which stops the session's run.
+
+A run's end is `STATUS_OK` with one of the `RUN_` outcomes, or a status saying why it came to none. It names
+no document.
+
+### The folder
+
+`IBackupFolder` is the app's, and encri calls it during a run and while its set-up screen is open, one call at
+a time, with a minute to answer each. Only the backup's own files are named: names beginning `encri-` in
+`[0-9A-Za-z._-]`, at most 128 characters. Answer every other name `STATUS_INVALID`, and list no other file.
+
+- **`list(after, limit)`** — the backup's files in name order, at most `limit` (1 to 1,000) after `after`. The
+  first page, `after` null, lists the folder, and the rest come from that listing. Never answer a listing the
+  provider says is still loading: ask again, then answer `STATUS_FAILED`.
+- **`openRead(name)`** and **`openWrite(name)`** — the provider's own descriptor. A write starts the file
+  afresh, creating it if need be; a new file the provider names otherwise is `STATUS_NAME_TAKEN`.
+- **`delete(name)`** — `STATUS_NOT_FOUND` if it was not there.
+
+### The unlock
+
+While a backup is set up, encri sends `com.systemhalted.encri.api.action.VAULT_UNLOCKED` to the backup app's
+package at each unlock. It carries nothing, and anyone can send it, so it is only ever a reason to ask encri.

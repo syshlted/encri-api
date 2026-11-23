@@ -3,8 +3,8 @@
 *2026-11-23 · accepted, and **flagged for veto on five points** (below). Designs encri-api's roadmap item 9: the
 backup app's surface, which L21 took `ACTION_BACKUPS` out to wait for. encri's half is its D149, and the app's is
 encri-backup's K4. Answers the six questions encri-backup's `encri-boundary` brief left open. **Amends L11**,
-whose locked vault refused every app, and **L15**, whose every entry lists `read`. Contract version 3. Nothing is
-built yet.*
+whose locked vault refused every app, and **L15**, whose every entry lists `read`. Contract version 3. ~~Nothing is
+built yet.~~ **The contract, the client and the registry are built 2026-11-23**; encri's side is its D149.*
 
 #### What has to cross, and the one idea
 

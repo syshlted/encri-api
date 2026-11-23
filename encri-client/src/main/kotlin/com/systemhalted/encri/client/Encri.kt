@@ -3,11 +3,14 @@ package com.systemhalted.encri.client
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import com.systemhalted.encri.client.internal.Contract
+import com.systemhalted.encri.client.internal.FolderStub
 import com.systemhalted.encri.client.internal.PackageIdentity
 import com.systemhalted.encri.client.internal.ServiceBinding
 import com.systemhalted.encri.client.internal.bitsOf
 import com.systemhalted.encri.client.internal.rightsOf
+import com.systemhalted.encri.client.internal.uidOf
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
@@ -111,6 +114,44 @@ public object Encri {
      * entry. The user picks the file in the system picker. As [saveBackupFileIntent].
      */
     public fun restoreIntent(): Intent = Intent(Contract.ACTION_RESTORE).setPackage(PACKAGE)
+
+    /**
+     * What the backup app starts with `startActivityForResult` to set the vault's backup up in [folder], on
+     * encri's own screen (encri-api L27). [authority] is the folder's provider, which encri checks is not its
+     * own. Read the answer with [backupSetUpResult].
+     *
+     * encri asks for the unlock and the passphrase itself, names the app from the system, and calls [folder]
+     * while its screen is open. Setting up replaces any backup the vault had, and the app it had it with.
+     * **Null when encri is not installed or [trust] does not accept it**, because the Intent hands encri the
+     * folder and must never reach a lookalike.
+     */
+    public fun setUpBackupIntent(
+        context: Context,
+        folder: BackupFolder,
+        authority: String,
+        trust: EncriTrust = EncriTrust.DEFAULT,
+    ): Intent? {
+        if (availability(context, trust) != Availability.Ready) return null
+        val extras =
+            Bundle().apply { putBinder(Contract.EXTRA_BACKUP_FOLDER, FolderStub(folder, uidOf(context, PACKAGE))) }
+        return Intent(Contract.ACTION_SET_UP_BACKUP)
+            .setPackage(PACKAGE)
+            .putExtras(extras)
+            .putExtra(Contract.EXTRA_BACKUP_FOLDER_AUTHORITY, authority)
+    }
+
+    /** What encri's set-up screen did, or null if it set nothing up. */
+    public fun backupSetUpResult(
+        resultCode: Int,
+        data: Intent?,
+    ): BackupSetUp? {
+        if (resultCode != Activity.RESULT_OK || data == null) return null
+        return when (data.getIntExtra(Contract.EXTRA_BACKUP_SET_UP, 0)) {
+            Contract.BACKUP_CREATED -> BackupSetUp.CREATED
+            Contract.BACKUP_RECONNECTED -> BackupSetUp.RECONNECTED
+            else -> null
+        }
+    }
 }
 
 /** Whether encri can be connected to. */

@@ -6,12 +6,14 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.IBinder
 import android.os.ParcelFileDescriptor
+import com.systemhalted.encri.api.BackupSessionResult
 import com.systemhalted.encri.api.DescriptorResult
 import com.systemhalted.encri.api.Entry
 import com.systemhalted.encri.api.EntryResult
 import com.systemhalted.encri.api.Grant
 import com.systemhalted.encri.api.GrantResult
 import com.systemhalted.encri.api.HandoffResult
+import com.systemhalted.encri.api.IBackupListener
 import com.systemhalted.encri.api.IEncriService
 import com.systemhalted.encri.api.IEncriSession
 import com.systemhalted.encri.api.IThumbnailListener
@@ -53,6 +55,10 @@ class StandInEncri : Service() {
                     session = StandInSession(vault, listener, cacheDir)
                     grant = vault.grant()
                 }
+
+            // The stand-in backs nothing up: the backup session is run against encri itself (L27).
+            override fun openBackup(listener: IBackupListener?): BackupSessionResult =
+                BackupSessionResult().apply { status = IEncriService.STATUS_NOT_AUTHORIZED }
         }
 
     override fun onBind(intent: Intent): IBinder = encri

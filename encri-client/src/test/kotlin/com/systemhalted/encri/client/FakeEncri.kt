@@ -9,12 +9,14 @@ import android.content.pm.SigningInfo
 import android.os.Build
 import android.os.IBinder
 import android.os.RemoteException
+import com.systemhalted.encri.api.BackupSessionResult
 import com.systemhalted.encri.api.DescriptorResult
 import com.systemhalted.encri.api.Entry
 import com.systemhalted.encri.api.EntryResult
 import com.systemhalted.encri.api.Grant
 import com.systemhalted.encri.api.GrantResult
 import com.systemhalted.encri.api.HandoffResult
+import com.systemhalted.encri.api.IBackupListener
 import com.systemhalted.encri.api.IEncriService
 import com.systemhalted.encri.api.IEncriSession
 import com.systemhalted.encri.api.IThumbnailListener
@@ -72,14 +74,21 @@ internal fun serveEncri(service: IEncriService.Stub) {
 internal class FakeService(
     var version: Int = IEncriService.VERSION,
     var opening: (IVaultListener?) -> SessionResult? = { null },
+    var openingBackup: (IBackupListener?) -> BackupSessionResult? = { null },
 ) : IEncriService.Stub() {
     var listener: IVaultListener? = null
+    var backupListener: IBackupListener? = null
 
     override fun contractVersion(): Int = version
 
     override fun openSession(listener: IVaultListener?): SessionResult? {
         this.listener = listener
         return opening(listener)
+    }
+
+    override fun openBackup(listener: IBackupListener?): BackupSessionResult? {
+        backupListener = listener
+        return openingBackup(listener)
     }
 }
 
