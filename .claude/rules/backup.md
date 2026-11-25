@@ -42,7 +42,7 @@ its D149, and the app's is encri-backup's K4.
 ## Measured, not assumed
 
 None yet. Unmeasured: the app's job lending encri its importance through the binding for the length of a run, and
-whether a phone that kills encri in the background (the A20, encri-firefox's `open-questions.md`) kills it mid-run.
+whether a phone that kills encri in the background (the A20, encriox's `open-questions.md`) kills it mid-run.
 
 ## Decisions
 
